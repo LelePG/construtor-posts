@@ -1,39 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useEventos } from "@/data/hooks/useEventos";
-import PostTipo from "@/core/posts/PostTipo";
 import Select from "../template/Select";
+import tiposPost from "@/core/posts/tipos";
+import Input from "../template/Input";
+import { useRef } from "react";
 
 export default function FormPost() {
 	const { eventos, obterEvento } = useEventos();
-	const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
-	const [selectedPostType, setSelectedPostType] = useState<string | null>(null);
-	const tiposPost = PostTipo.listarTiposDePost();
+	const [eventoSelecionado, setEventoSelecionado] = useState<string | null>(
+		null
+	);
+	const [tipoPostSelecionado, setTipoPostSelecionado] = useState<
+		keyof typeof tiposPost | null
+	>(null);
+	const [listaParametrosAdicionais, setListaParametrosAdicionais] =
+		useState<any>([]);
+	const [parametrosAdicionais, setParametrosAdicionais] = useState<any>({});
+	const possiveisTipos = Object.keys(tiposPost);
 
-	const handleEventChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedEvent(e.target.value);
-	};
+	const PostSelecionado = useRef<any>(null);
 
-	const handlePostTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedPostType(e.target.value);
-	};
+	useEffect(() => {
+		if (!tipoPostSelecionado) return;
+
+		PostSelecionado.current = tiposPost[tipoPostSelecionado!];
+
+		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
+	}, [tipoPostSelecionado]);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (selectedEvent && selectedPostType) {
-			console.log(
-				`Evento: ${selectedEvent}, Tipo de Post: ${selectedPostType}`
-			);
-			const evento = obterEvento(selectedEvent);
+		if (eventoSelecionado && tipoPostSelecionado) {
+			const evento = obterEvento(eventoSelecionado);
+
 			if (!evento) {
 				console.log("Evento não encontrado.");
 				return;
 			}
-			const gerador = new PostTipo(evento);
-			const textoPost = gerador[selectedPostType]();
-			console.log(textoPost);
+			const gerador = new PostSelecionado.current(evento);
+			const texto = gerador.gerar(parametrosAdicionais);
+			console.log(texto);
 		} else {
 			console.log("Por favor, selecione um evento e um tipo de post.");
 		}
+	};
+
+	const handleAdditionalParamChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, value } = e.target;
+		setParametrosAdicionais((prevParams: any) => ({
+			...prevParams,
+			[name]: value,
+		}));
 	};
 
 	return (
@@ -41,23 +60,35 @@ export default function FormPost() {
 			<Select
 				label="Escolha um evento:"
 				id="event"
-				value={selectedEvent}
+				value={eventoSelecionado}
 				options={eventos.map((event) => ({
 					value: event.nome,
 					label: event.nome,
 				}))}
-				onChange={handleEventChange}
+				onChange={(e) => setEventoSelecionado(e.target.value)}
 			/>
 			<Select
 				label="Escolha um tipo de post:"
 				id="postType"
-				value={selectedPostType}
-				options={tiposPost.map((tipo) => ({
+				value={tipoPostSelecionado}
+				options={possiveisTipos.map((tipo) => ({
 					value: tipo,
 					label: tipo,
 				}))}
-				onChange={handlePostTypeChange}
+				onChange={(e: any) => setTipoPostSelecionado(e.target.value)}
 			/>
+			{listaParametrosAdicionais?.map((param: any) => {
+				return (
+					<Input
+						key={param.nome}
+						label={param.nome}
+						name={param.label}
+						type={param.tipo}
+						value={parametrosAdicionais[param.label] || ""}
+						onChange={handleAdditionalParamChange}
+					/>
+				);
+			})}
 			<button type="submit">Gerar Post</button>
 		</form>
 	);
