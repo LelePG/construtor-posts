@@ -25,6 +25,8 @@ export default function FormPost() {
 
 		PostSelecionado.current = tiposPost[tipoPostSelecionado!];
 
+		const parametros = PostSelecionado.current.obterParametros();
+		console.log(parametros);
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
