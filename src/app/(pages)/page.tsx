@@ -4,6 +4,7 @@ import { useEventos } from "@/data/hooks/useEventos";
 import Image from "next/image";
 import Link from "next/link";
 import FormPost from "@/components/post/FormPost";
+import EditorImagem from "@/components/imagem/EditorImagem";
 
 export default function Home() {
 	const eventos = useEventos();
@@ -11,7 +12,8 @@ export default function Home() {
 	return (
 		<div>
 			<Link href="/propriedades-evento">Criar novo Evento</Link>
-			<FormPost />
+			{/* <FormPost /> */}
+			<EditorImagem />
 		</div>
 	);
 }

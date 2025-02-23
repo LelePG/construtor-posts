@@ -1,9 +1,12 @@
+import { twMerge } from "tailwind-merge";
+
 interface SelectProps {
 	label: string;
 	id: string;
 	value: string | number | null;
 	options: { value: string | number; label: string }[];
 	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+	className?: string;
 }
 
 export default function Select({
@@ -12,9 +15,10 @@ export default function Select({
 	value,
 	options,
 	onChange,
+	className,
 }: SelectProps) {
 	return (
-		<div className="mb-4">
+		<div className={twMerge("mb-4", className)}>
 			<label
 				htmlFor={id}
 				className="block text-gray-700 text-sm font-bold mb-2"
@@ -22,7 +26,6 @@ export default function Select({
 				{label}
 			</label>
 			<select
-				id={id}
 				value={value ?? ""}
 				onChange={onChange}
 				className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

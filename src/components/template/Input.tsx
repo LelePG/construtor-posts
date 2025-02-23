@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface InputProps {
 	label: string;
 	name: string;
@@ -5,12 +7,13 @@ interface InputProps {
 	placeholder?: string;
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	className?: string;
 }
 
 export default function Input(props: InputProps) {
 	const { label, name, type = "text", placeholder, value, onChange } = props;
 	return (
-		<div className="mb-4">
+		<div className={twMerge("mb-4", props.className)}>
 			<label
 				className="block text-gray-700 text-sm font-bold mb-2"
 				htmlFor={name}
