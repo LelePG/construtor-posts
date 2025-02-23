@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useEventos } from "@/data/hooks/useEventos";
-import Select from "../template/Select";
-import tiposPost from "@/core/posts/tipos";
-import Input from "../template/Input";
 import { useRef } from "react";
+import { Button, Input, Select } from "../template";
+import tiposPost from "@/core/posts/tipos";
 import Exibir from "./Exibir";
 
 export default function FormPost() {
@@ -32,7 +31,7 @@ export default function FormPost() {
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const aoSubmeter = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (eventoSelecionado && tipoPostSelecionado) {
 			const evento = obterEvento(eventoSelecionado);
@@ -49,7 +48,7 @@ export default function FormPost() {
 		}
 	};
 
-	const handleAdditionalParamChange = (
+	const aoMudarParametrosAdicionais = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const { name, value } = e.target;
@@ -60,40 +59,50 @@ export default function FormPost() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={aoSubmeter}
+			className="space-y-4 p-4 bg-white shadow-md rounded-md"
+		>
 			<Select
-				label="Escolha um evento:"
+				texto="Escolha um evento:"
 				id="event"
-				value={eventoSelecionado}
-				options={eventos.map((event) => ({
-					value: event.nome,
-					label: event.nome,
+				valor={eventoSelecionado}
+				opcoes={eventos.map((event) => ({
+					valor: event.nome,
+					texto: event.nome,
 				}))}
 				onChange={(e) => setEventoSelecionado(e.target.value)}
+				className="w-full p-2 border border-gray-300 rounded-md"
 			/>
 			<Select
-				label="Escolha um tipo de post:"
+				texto="Escolha um tipo de post:"
 				id="postType"
-				value={tipoPostSelecionado}
-				options={possiveisTipos.map((tipo) => ({
-					value: tipo,
-					label: tipo,
+				valor={tipoPostSelecionado}
+				opcoes={possiveisTipos.map((tipo) => ({
+					valor: tipo,
+					texto: tipo,
 				}))}
 				onChange={(e: any) => setTipoPostSelecionado(e.target.value)}
+				className="w-full p-2 border border-gray-300 rounded-md"
 			/>
 			{listaParametrosAdicionais?.map((param: any) => {
 				return (
 					<Input
 						key={param.nome}
-						label={param.nome}
-						name={param.label}
-						type={param.tipo}
-						value={parametrosAdicionais[param.label] || ""}
-						onChange={handleAdditionalParamChange}
+						texto={param.nome}
+						id={param.nome}
+						tipo={param.tipo}
+						valor={parametrosAdicionais[param.nome] || ""}
+						onChange={aoMudarParametrosAdicionais}
+						className="w-full p-2 border border-gray-300 rounded-md"
 					/>
 				);
 			})}
-			<button type="submit">Gerar Post</button>
+			<Button
+				onClick={() => {}}
+				texto="Gerar Post"
+				className="w-full p-2 bg-blue-500 text-white rounded-md"
+			/>
 			{postGerado && <Exibir texto={postGerado} setTexto={setPostGerado} />}
 		</form>
 	);

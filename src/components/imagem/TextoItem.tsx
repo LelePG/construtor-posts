@@ -2,15 +2,15 @@ import React from "react";
 import { TextoConfig } from "@/core/texto/TextoConfig";
 
 interface TextItemProps {
-	textConfig: TextoConfig;
-	position: { x: number; y: number };
+	config: TextoConfig;
+	posicao: { x: number; y: number };
 	onMouseDown: (e: React.MouseEvent) => void;
 	onClick: () => void;
 }
 
 export default function TextoItem({
-	textConfig,
-	position,
+	config,
+	posicao,
 	onMouseDown,
 	onClick,
 }: TextItemProps) {
@@ -18,8 +18,8 @@ export default function TextoItem({
 		<div
 			className="absolute"
 			style={{
-				left: `${position.x}px`,
-				top: `${position.y}px`,
+				left: `${posicao.x}px`,
+				top: `${posicao.y}px`,
 				cursor: "move",
 			}}
 			onMouseDown={onMouseDown}
@@ -28,14 +28,14 @@ export default function TextoItem({
 			<span
 				className="text-4xl"
 				style={{
-					color: textConfig.color,
-					fontWeight: textConfig.isBold ? "bold" : "normal",
-					fontStyle: textConfig.isItalic ? "italic" : "normal",
-					fontSize: `${textConfig.fontSize}px`,
-					fontFamily: textConfig.fontFamily,
+					color: config.cor,
+					fontWeight: config.negrito ? "bold" : "normal",
+					fontStyle: config.italico ? "italic" : "normal",
+					fontSize: `${config.tamanhoFonte}px`,
+					fontFamily: config.familiaFonte,
 				}}
 			>
-				{textConfig.text}
+				{config.texto}
 			</span>
 		</div>
 	);

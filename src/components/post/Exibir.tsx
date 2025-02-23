@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Button from "../template/Button";
 
 interface ExibirProps {
 	texto: string;
@@ -6,30 +7,29 @@ interface ExibirProps {
 }
 
 export default function Exibir({ texto, setTexto }: ExibirProps) {
-	const [copied, setCopied] = useState(false);
+	const [copiar, setCopiar] = useState(false);
 
-	const handleCopy = () => {
+	const aoCopiar = () => {
 		navigator.clipboard.writeText(texto);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
+		setCopiar(true);
+		setTimeout(() => setCopiar(false), 2000);
 	};
 
 	return (
-		<div className="p-4 bg-white rounded shadow-md min-h-90">
+		<div className="mt-4 p-4 bg-white rounded-md shadow-md min-h-90">
 			<textarea
 				value={texto}
 				onChange={(e) => setTexto(e.target.value)}
 				className="mb-4 p-2 border rounded w-full text-gray-800 h-full"
 				rows={6}
 			/>
-			<button
-				onClick={handleCopy}
+			<Button
+				onClick={aoCopiar}
 				className={`px-4 py-2 rounded ${
-					copied ? "bg-green-500 text-white" : "bg-blue-500 text-white"
+					copiar ? "bg-green-500 text-white" : "bg-blue-500 text-white"
 				} transition-colors duration-300`}
-			>
-				{copied ? "Copiado!" : "Copiar"}
-			</button>
+				texto={copiar ? "Copiado!" : "Copiar"}
+			/>
 		</div>
 	);
 }

@@ -83,10 +83,6 @@ class PostFactory {
 	gerar(): string {
 		return this.texto;
 	}
-
-	gerarPostDe(tipo: keyof PostFactory) {
-		return (this[tipo] as Function).call(this);
-	}
 }
 
 export default PostFactory;

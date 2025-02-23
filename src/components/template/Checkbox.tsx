@@ -1,21 +1,21 @@
 import React from "react";
 
 interface CheckboxProps {
-	label: string;
+	texto: string;
 	checked: boolean;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	className?: string;
 }
 
 export default function Checkbox({
-	label,
+	texto,
 	checked,
 	onChange,
 	className,
 }: CheckboxProps) {
 	return (
 		<div className={`flex items-center mb-4 border p-2 rounded ${className}`}>
-			<label className="mr-2">{label}</label>
+			<label className="mr-2">{texto}</label>
 			<input
 				type="checkbox"
 				checked={checked}

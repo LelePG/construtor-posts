@@ -1,7 +1,5 @@
-import Checkbox from "../template/Checkbox";
-import Input from "../template/Input";
-import Select from "../template/Select";
 import { TextoConfig } from "@/core/texto/TextoConfig";
+import { Checkbox, Input, Select } from "../template";
 
 interface ConfigTextoProps {
 	config: TextoConfig;
@@ -9,7 +7,7 @@ interface ConfigTextoProps {
 }
 
 export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
-	const handleChange = (key: string, value: any) => {
+	const aoMudarConfig = (key: string, value: any) => {
 		setConfig({ ...config, [key]: value });
 	};
 
@@ -17,56 +15,58 @@ export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
 		<div className="p-4">
 			<div className="flex flex-wrap gap-4 border p-4 rounded">
 				<Input
-					type="color"
+					tipo="color"
 					placeholder="Cor do Texto"
-					name="textColor"
-					label="Cor do Texto:"
-					value={config.color}
-					onChange={(e) => handleChange("color", e.target.value)}
+					id="cor"
+					texto="Cor do Texto:"
+					valor={config.cor}
+					onChange={(e) => aoMudarConfig("cor", e.target.value)}
 					className="border rounded"
 				/>
 				<Checkbox
-					label="Negrito:"
-					checked={config.isBold}
-					onChange={(e) => handleChange("isBold", e.target.checked)}
-					className={config.isBold ? "bg-green-200" : ""}
+					texto="Negrito:"
+					checked={config.negrito}
+					onChange={(e) => aoMudarConfig("negrito", e.target.checked)}
+					className={config.negrito ? "bg-green-200" : ""}
 				/>
 				<Checkbox
-					label="Itálico:"
-					checked={config.isItalic}
-					onChange={(e) => handleChange("isItalic", e.target.checked)}
-					className={config.isItalic ? "bg-green-200" : ""}
+					texto="Itálico:"
+					checked={config.italico}
+					onChange={(e) => aoMudarConfig("italico", e.target.checked)}
+					className={config.italico ? "bg-green-200" : ""}
 				/>
 				<Input
-					type="number"
+					tipo="number"
 					placeholder="Tamanho da Fonte"
-					name="fontSize"
-					label="Tamanho da Fonte:"
-					value={config.fontSize.toString()}
-					onChange={(e) => handleChange("fontSize", parseInt(e.target.value))}
+					id="tamanhoFonte"
+					texto="Tamanho da Fonte:"
+					valor={config.tamanhoFonte.toString()}
+					onChange={(e) =>
+						aoMudarConfig("tamanhoFonte", parseInt(e.target.value))
+					}
 					className="w-20 p-2 border rounded"
 				/>
 				<Select
-					id="fontFamily"
-					label="Fonte:"
-					value={config.fontFamily}
-					onChange={(e) => handleChange("fontFamily", e.target.value)}
-					options={[
-						{ value: "GoogleSans", label: "GoogleSans" },
-						{ value: "Arial", label: "Arial" },
-						{ value: "Times New Roman", label: "Times New Roman" },
+					id="familiaFonte"
+					texto="Fonte:"
+					valor={config.familiaFonte}
+					onChange={(e) => aoMudarConfig("familiaFonte", e.target.value)}
+					opcoes={[
+						{ valor: "GoogleSans", texto: "GoogleSans" },
+						{ valor: "Arial", texto: "Arial" },
+						{ valor: "Times New Roman", texto: "Times New Roman" },
 					]}
 					className="p-2 border rounded"
 				/>
 			</div>
 			<div className="mb-4">
 				<Input
-					type="text"
+					tipo="text"
 					placeholder="Digite o texto"
-					name="texto"
-					label="Texto:"
-					value={config.text}
-					onChange={(e) => handleChange("text", e.target.value)}
+					id="texto"
+					texto="Texto:"
+					valor={config.texto}
+					onChange={(e) => aoMudarConfig("texto", e.target.value)}
 					className="w-full p-2 border rounded"
 				/>
 			</div>

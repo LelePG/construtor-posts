@@ -1,10 +1,4 @@
-import React, {
-	createContext,
-	useState,
-	ReactNode,
-	useContext,
-	useEffect,
-} from "react";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { PropriedadesEvento } from "@/core/evento/PropriedadesEvento";
 import GerenciadorEventos from "@/core/evento/GerenciadorEventos";
 import Evento from "@/core/evento/Evento";

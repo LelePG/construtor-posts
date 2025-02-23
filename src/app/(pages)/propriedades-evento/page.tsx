@@ -1,6 +1,7 @@
 "use client";
 import FormPropriedades from "@/components/evento/FormPropriedades";
 import { useRouter } from "next/navigation";
+
 export default function PropriedadesEvento() {
 	const router = useRouter();
 	function redirecionar() {
@@ -9,7 +10,7 @@ export default function PropriedadesEvento() {
 
 	return (
 		<div>
-			<FormPropriedades afterSubmit={redirecionar} />
+			<FormPropriedades aposEnviar={redirecionar} />
 		</div>
 	);
 }

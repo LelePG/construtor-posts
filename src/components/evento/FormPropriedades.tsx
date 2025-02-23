@@ -1,15 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import Input from "../template/Input";
+import { Button, Input } from "../template";
 import { PropriedadesEvento } from "@/core/evento/PropriedadesEvento";
 import { useEventos } from "@/data/hooks/useEventos";
 
 interface FormPropriedadesProps {
-	afterSubmit?: () => void;
+	aposEnviar?: () => void;
 }
 
 export default function FormPropriedades({
-	afterSubmit,
+	aposEnviar,
 }: FormPropriedadesProps) {
 	const eventos = useEventos();
 	const [propriedades, setPropriedades] = useState<PropriedadesEvento>({
@@ -20,7 +20,7 @@ export default function FormPropriedades({
 		hashtags: "",
 	});
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const aoModificarPropriedade = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setPropriedades((prevState) => ({
 			...prevState,
@@ -28,61 +28,60 @@ export default function FormPropriedades({
 		}));
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const aoSubmeter = (e: React.FormEvent) => {
 		e.preventDefault();
 		eventos.adicionarEvento(propriedades);
-		if (afterSubmit) {
-			afterSubmit();
+		if (aposEnviar) {
+			aposEnviar();
 		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4">
+		<form onSubmit={aoSubmeter} className="max-w-lg mx-auto p-4">
 			<h1 className="text-2xl font-bold mb-4">Criar Postagem</h1>
 			<Input
-				label="Evento"
-				name="nome"
-				value={propriedades.nome}
-				onChange={handleChange}
+				texto="Evento"
+				id="nome"
+				valor={propriedades.nome}
+				onChange={aoModificarPropriedade}
 			/>
 			<Input
-				label="Link de Inscrição"
-				name="linkInscricao"
-				value={propriedades.linkInscricao}
-				onChange={handleChange}
+				texto="Link de Inscrição"
+				id="linkInscricao"
+				valor={propriedades.linkInscricao}
+				onChange={aoModificarPropriedade}
 			/>
 			<Input
-				label="Local"
-				name="local"
-				value={propriedades.local}
-				onChange={handleChange}
+				texto="Local"
+				id="local"
+				valor={propriedades.local}
+				onChange={aoModificarPropriedade}
 			/>
 			<Input
-				label="Data"
-				name="datetime"
-				type="date"
-				value={propriedades.datetime.toISOString().split("T")[0]}
-				onChange={handleChange}
+				texto="Data"
+				id="datetime"
+				tipo="date"
+				valor={propriedades.datetime.toISOString().split("T")[0]}
+				onChange={aoModificarPropriedade}
 			/>
 			<Input
-				label="Hora"
-				name="hora"
-				type="time"
-				value={propriedades.datetime.toTimeString().split(" ")[0]}
-				onChange={handleChange}
+				texto="Hora"
+				id="hora"
+				tipo="time"
+				valor={propriedades.datetime.toTimeString().split(" ")[0]}
+				onChange={aoModificarPropriedade}
 			/>
 			<Input
-				label="Hashtags"
-				name="hashtags"
-				value={propriedades.hashtags}
-				onChange={handleChange}
+				texto="Hashtags"
+				id="hashtags"
+				valor={propriedades.hashtags}
+				onChange={aoModificarPropriedade}
 			/>
-			<button
-				type="submit"
-				className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-			>
-				Salvar
-			</button>
+			<Button
+				onClick={() => {}}
+				texto="Salvar"
+				className="bg-blue-500 hover:bg-blue-700"
+			/>
 		</form>
 	);
 }
