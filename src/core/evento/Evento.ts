@@ -31,11 +31,27 @@ export default class Evento {
 	}
 
 	get data(): string {
-		return this.propriedades.datetime.getDate().toString();
+		const dia = this.propriedades.datetime
+			.getDate()
+			.toString()
+			.padStart(2, "0");
+		const mes = (this.propriedades.datetime.getMonth() + 1)
+			.toString()
+			.padStart(2, "0");
+		const ano = this.propriedades.datetime.getFullYear();
+		return `${dia}/${mes}/${ano}`;
 	}
 
 	get hora(): string {
-		return this.propriedades.datetime.getTime().toString();
+		const hora = this.propriedades.datetime
+			.getHours()
+			.toString()
+			.padStart(2, "0");
+		const minuto = this.propriedades.datetime
+			.getMinutes()
+			.toString()
+			.padStart(2, "0");
+		return `${hora}:${minuto}`;
 	}
 
 	atualizarPropriedades(propriedades: Partial<PropriedadesEvento>): void {

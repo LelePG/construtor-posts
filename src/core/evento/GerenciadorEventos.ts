@@ -32,6 +32,12 @@ export default class GerenciadorEventos {
 		return false;
 	}
 
+	obter(nome: string): Evento | undefined {
+		return this.eventos.find(
+			(evento) => evento.nome === nome.toLowerCase().trim()
+		);
+	}
+
 	listarEventos(): Evento[] {
 		return this.eventos;
 	}
