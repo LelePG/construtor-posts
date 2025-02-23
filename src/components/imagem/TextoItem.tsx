@@ -26,7 +26,7 @@ export default function TextoItem({
 			onClick={onClick}
 		>
 			<span
-				className="text-4xl"
+				className="text-4xl leading-tight"
 				style={{
 					color: config.cor,
 					fontWeight: config.negrito ? "bold" : "normal",

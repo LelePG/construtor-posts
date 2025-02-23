@@ -1,20 +1,29 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
 import UploadImagem from "./UploadImagem";
 import ConfigTexto from "./ConfigTexto";
 import { TextoConfig } from "@/core/texto/TextoConfig";
 import TextoItem from "./TextoItem";
 import { Button } from "../template";
+import { twMerge } from "tailwind-merge";
 
 interface Texto extends TextoConfig {
 	posicao: { x: number; y: number };
 }
 
-export default function EditorImagem() {
+interface EditorImagemProps {
+	className?: string;
+}
+
+export default function EditorImagem({ className }: EditorImagemProps) {
 	const [imagem, setImagem] = useState<string | null>(null);
 	const [textos, setTextos] = useState<Texto[]>([]);
 	const [indiceTextoAtual, setIndiceTextoAtual] = useState<number | null>(null);
 	const imagemRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		aoAdicionarTexto();
+	}, []);
 
 	const aoSubirImagem = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const arquivo = e.target.files?.[0];
@@ -73,7 +82,7 @@ export default function EditorImagem() {
 		const novoTexto: Texto = {
 			texto: "",
 			posicao: { x: 0, y: 0 },
-			cor: "#ffffff",
+			cor: "#000",
 			negrito: false,
 			italico: false,
 			tamanhoFonte: 24,
@@ -84,52 +93,63 @@ export default function EditorImagem() {
 	};
 
 	return (
-		<div className="container mx-auto p-4">
-			<h1 className="text-2xl font-bold mb-4">Editor de Imagem</h1>
-			<UploadImagem onImageUpload={aoSubirImagem} />
-			<Button
-				onClick={aoAdicionarTexto}
-				texto="Adicionar Texto"
-				className="mt-4"
-			/>
-			{indiceTextoAtual !== null && (
-				<ConfigTexto
-					config={textos[indiceTextoAtual]}
-					setConfig={(config) => {
-						const novosTextos = [...textos];
-						novosTextos[indiceTextoAtual] = {
-							...config,
-							posicao: novosTextos[indiceTextoAtual].posicao,
-						};
-						setTextos(novosTextos);
-					}}
-				/>
+		<div
+			className={twMerge(
+				"mt-14 bg-gray-50 rounded-lg container mx-auto p-4",
+				className
 			)}
-			<div ref={imagemRef} className="relative mt-4">
-				{imagem && (
-					<img
-						src={imagem}
-						alt="Uploaded"
-						className="w-full h-full object-cover"
-					/>
-				)}
-
-				{imagem &&
-					textos.map((obj, index) => (
-						<TextoItem
-							config={obj}
-							key={index}
-							posicao={obj.posicao}
-							onMouseDown={aoClicar(index)}
-							onClick={() => setIndiceTextoAtual(index)}
-						/>
-					))}
+		>
+			<div className="flex items-end">
+				<UploadImagem onImageUpload={aoSubirImagem} />
 			</div>
-			<Button
-				onClick={aoSalvarImagem}
-				texto="Salvar Imagem"
-				className="mt-4 bg-blue-500 hover:bg-blue-700"
-			/>
+
+			{imagem && indiceTextoAtual !== null && (
+				<div className="flex gap-4 my-5 p-3">
+					<div className="flex  flex-col   border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
+						<ConfigTexto
+							config={textos[indiceTextoAtual]}
+							setConfig={(config) => {
+								const novosTextos = [...textos];
+								novosTextos[indiceTextoAtual] = {
+									...config,
+									posicao: novosTextos[indiceTextoAtual].posicao,
+								};
+								setTextos(novosTextos);
+							}}
+						/>
+						<Button
+							onClick={aoAdicionarTexto}
+							texto="Adicionar Texto"
+							className="w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+						/>
+						<Button
+							onClick={aoSalvarImagem}
+							texto="Salvar Imagem"
+							className="mt-4 w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+						/>
+					</div>
+					<div ref={imagemRef} className="relative max-w-screen-lg">
+						{imagem && (
+							<img
+								src={imagem}
+								alt="Uploaded"
+								className="border-2 border-black  object-cover "
+							/>
+						)}
+
+						{imagem &&
+							textos.map((obj, index) => (
+								<TextoItem
+									config={obj}
+									key={index}
+									posicao={obj.posicao}
+									onMouseDown={aoClicar(index)}
+									onClick={() => setIndiceTextoAtual(index)}
+								/>
+							))}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

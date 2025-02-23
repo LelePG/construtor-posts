@@ -16,16 +16,17 @@ export default function Exibir({ texto, setTexto }: ExibirProps) {
 	};
 
 	return (
-		<div className="mt-4 p-4 bg-white rounded-md shadow-md min-h-90">
+		<div className="mt-4  ">
 			<textarea
 				value={texto}
 				onChange={(e) => setTexto(e.target.value)}
-				className="mb-4 p-2 border rounded w-full text-gray-800 h-full"
+				className="min-h-80 p-2 border rounded w-full text-gray-800"
+				placeholder="Digite o seu texto ou selecione o tipo de post e clique em Gerar Post"
 				rows={6}
 			/>
 			<Button
 				onClick={aoCopiar}
-				className={`px-4 py-2 rounded ${
+				className={`px-4 rounded ${
 					copiar ? "bg-green-500 text-white" : "bg-blue-500 text-white"
 				} transition-colors duration-300`}
 				texto={copiar ? "Copiado!" : "Copiar"}

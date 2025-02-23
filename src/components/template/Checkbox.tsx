@@ -14,14 +14,11 @@ export default function Checkbox({
 	className,
 }: CheckboxProps) {
 	return (
-		<div className={`flex items-center mb-4 border p-2 rounded ${className}`}>
+		<div
+			className={`flex  font-semibold items-center mb-2 p-2 rounded ${className}`}
+		>
 			<label className="mr-2">{texto}</label>
-			<input
-				type="checkbox"
-				checked={checked}
-				onChange={onChange}
-				className="border rounded"
-			/>
+			<input type="checkbox" checked={checked} onChange={onChange} />
 		</div>
 	);
 }

@@ -17,7 +17,7 @@ export default function FormPost() {
 		useState<any>([]);
 	const [parametrosAdicionais, setParametrosAdicionais] = useState<any>({});
 	const possiveisTipos = Object.keys(tiposPost);
-	const [postGerado, setPostGerado] = useState<string | null>(null);
+	const [postGerado, setPostGerado] = useState<string>("");
 
 	const PostSelecionado = useRef<any>(null);
 
@@ -61,7 +61,7 @@ export default function FormPost() {
 	return (
 		<form
 			onSubmit={aoSubmeter}
-			className="space-y-4 p-4 bg-white shadow-md rounded-md"
+			className="my-4 p-4 bg-gray-50 shadow-md rounded-md"
 		>
 			<Select
 				texto="Escolha um evento:"
@@ -72,7 +72,6 @@ export default function FormPost() {
 					texto: event.nome,
 				}))}
 				onChange={(e) => setEventoSelecionado(e.target.value)}
-				className="w-full p-2 border border-gray-300 rounded-md"
 			/>
 			<Select
 				texto="Escolha um tipo de post:"
@@ -83,7 +82,6 @@ export default function FormPost() {
 					texto: tipo,
 				}))}
 				onChange={(e: any) => setTipoPostSelecionado(e.target.value)}
-				className="w-full p-2 border border-gray-300 rounded-md"
 			/>
 			{listaParametrosAdicionais?.map((param: any) => {
 				return (
@@ -94,7 +92,7 @@ export default function FormPost() {
 						tipo={param.tipo}
 						valor={parametrosAdicionais[param.nome] || ""}
 						onChange={aoMudarParametrosAdicionais}
-						className="w-full p-2 border border-gray-300 rounded-md"
+						className="w-full p-2 "
 					/>
 				);
 			})}
@@ -103,7 +101,7 @@ export default function FormPost() {
 				texto="Gerar Post"
 				className="w-full p-2 bg-blue-500 text-white rounded-md"
 			/>
-			{postGerado && <Exibir texto={postGerado} setTexto={setPostGerado} />}
+			<Exibir texto={postGerado} setTexto={setPostGerado} />
 		</form>
 	);
 }

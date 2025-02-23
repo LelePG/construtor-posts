@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-
+import Label from "./Label";
 interface InputProps {
 	texto: string;
 	id: string;
@@ -21,13 +21,8 @@ export default function Input(props: InputProps) {
 		className,
 	} = props;
 	return (
-		<div className={twMerge("mb-4", className)}>
-			<label
-				className="block text-gray-700 text-sm font-bold mb-2"
-				htmlFor={id}
-			>
-				{texto}
-			</label>
+		<div className={twMerge(className)}>
+			<Label texto={texto} para={id} />
 			<input
 				id={id}
 				type={tipo}

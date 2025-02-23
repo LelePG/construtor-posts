@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import Label from "./Label";
 
 interface SelectProps {
 	texto: string;
@@ -11,13 +12,8 @@ interface SelectProps {
 export default function Select(props: SelectProps) {
 	const { texto, id, valor, opcoes, onChange, className } = props;
 	return (
-		<div className={twMerge("mb-4", className)}>
-			<label
-				htmlFor={id}
-				className="block text-gray-700 text-sm font-bold mb-2"
-			>
-				{texto}
-			</label>
+		<div className={twMerge("mb-2 w-full p-2 rounded-md", className)}>
+			<Label texto={texto} para={id} />
 			<select
 				name={id}
 				value={valor ?? ""}

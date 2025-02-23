@@ -21,11 +21,11 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		gerenciadorEventos.criar({
-			nome: "ss",
-			linkInscricao: "ss",
-			local: "ss",
+			nome: "Evento Muito Legal",
+			linkInscricao: "https://www.google.com",
+			local: "Pelotas Parque tecnológico",
 			datetime: new Date("2025-02-23T13:59:01.882Z"),
-			hashtags: "ss",
+			hashtags: "#teste #vaiDarCerto",
 		});
 		gerenciadorEventos.criar({
 			nome: "ww",

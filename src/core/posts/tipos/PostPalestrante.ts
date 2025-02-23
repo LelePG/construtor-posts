@@ -3,11 +3,11 @@ import PostBase from "../PostBase";
 export default class PostPalestrante extends PostBase {
 	static obterParametros() {
 		return [
-			{ nome: "Nome Palestrante", label: "nomePalestrante", tipo: "string" },
-			{ nome: "Título Palestra", label: "tituloPalestra", tipo: "string" },
-			{ nome: "Resumo Palestra", label: "resumoPalestra", tipo: "string" },
+			{ nome: "Nome Palestrante:", label: "nomePalestrante", tipo: "string" },
+			{ nome: "Título Palestra:", label: "tituloPalestra", tipo: "string" },
+			{ nome: "Resumo Palestra:", label: "resumoPalestra", tipo: "string" },
 			{
-				nome: "Mini-bio Palestrante",
+				nome: "Mini-bio Palestrante:",
 				label: "miniBioPalestrante",
 				tipo: "string",
 			},
