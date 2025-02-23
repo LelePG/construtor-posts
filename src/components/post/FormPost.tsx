@@ -4,6 +4,7 @@ import Select from "../template/Select";
 import tiposPost from "@/core/posts/tipos";
 import Input from "../template/Input";
 import { useRef } from "react";
+import Exibir from "./Exibir";
 
 export default function FormPost() {
 	const { eventos, obterEvento } = useEventos();
@@ -17,6 +18,7 @@ export default function FormPost() {
 		useState<any>([]);
 	const [parametrosAdicionais, setParametrosAdicionais] = useState<any>({});
 	const possiveisTipos = Object.keys(tiposPost);
+	const [postGerado, setPostGerado] = useState<string | null>(null);
 
 	const PostSelecionado = useRef<any>(null);
 
@@ -41,7 +43,7 @@ export default function FormPost() {
 			}
 			const gerador = new PostSelecionado.current(evento);
 			const texto = gerador.gerar(parametrosAdicionais);
-			console.log(texto);
+			setPostGerado(texto);
 		} else {
 			console.log("Por favor, selecione um evento e um tipo de post.");
 		}
@@ -92,6 +94,7 @@ export default function FormPost() {
 				);
 			})}
 			<button type="submit">Gerar Post</button>
+			{postGerado && <Exibir texto={postGerado} setTexto={setPostGerado} />}
 		</form>
 	);
 }
