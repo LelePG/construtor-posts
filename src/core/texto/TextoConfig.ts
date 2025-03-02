@@ -5,4 +5,5 @@ export interface TextoConfig {
 	italico: boolean;
 	tamanhoFonte: number;
 	familiaFonte: string;
+	justificacao: "esquerda" | "direita" | "centro";
 }

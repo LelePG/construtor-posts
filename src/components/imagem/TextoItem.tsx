@@ -14,6 +14,14 @@ export default function TextoItem({
 	onMouseDown,
 	onClick,
 }: TextItemProps) {
+	let alinhamento: React.CSSProperties["textAlign"] = "left";
+
+	if (config.justificacao === "centro") {
+		alinhamento = "center";
+	} else if (config.justificacao === "direita") {
+		alinhamento = "right";
+	}
+
 	return (
 		<div
 			className="absolute"
@@ -21,6 +29,7 @@ export default function TextoItem({
 				left: `${posicao.x}px`,
 				top: `${posicao.y}px`,
 				cursor: "move",
+				textAlign: alinhamento,
 			}}
 			onMouseDown={onMouseDown}
 			onClick={onClick}

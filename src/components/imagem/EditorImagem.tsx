@@ -87,6 +87,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 			italico: false,
 			tamanhoFonte: 24,
 			familiaFonte: "GoogleSans",
+			justificacao: "esquerda",
 		};
 		setTextos([...textos, novoTexto]);
 		setIndiceTextoAtual(textos.length);

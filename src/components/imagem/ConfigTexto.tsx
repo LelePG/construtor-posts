@@ -65,6 +65,18 @@ export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
 						]}
 						className="flex gap-2 items-center"
 					/>
+					<Select
+						id="justificacao"
+						texto="Justificação:"
+						valor={config.justificacao}
+						onChange={(e) => aoMudarConfig("justificacao", e.target.value)}
+						opcoes={[
+							{ valor: "esquerda", texto: "Esquerda" },
+							{ valor: "centro", texto: "Centro" },
+							{ valor: "direita", texto: "Direita" },
+						]}
+						className="flex gap-2 items-center"
+					/>
 				</div>
 			</div>
 			<Input
