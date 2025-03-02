@@ -14,6 +14,7 @@ import PostTragaSeuLixo from "./PostTragaSeuLixo";
 import PostPatrocinador from "./PostPatrocinador";
 import PostPalestrante from "./PostPalestrante";
 import PostNaoEsquecaCopo from "./PostDeNaoEsquecaCopo";
+import PostApoiador from "./PostApoiador";
 
 const tiposPost = {
 	ehAmanha: PostEAmanha,
@@ -32,6 +33,7 @@ const tiposPost = {
 	patrocinador: PostPatrocinador,
 	palestrante: PostPalestrante,
 	naoEsquecaCopo: PostNaoEsquecaCopo,
+	apoiador: PostApoiador,
 };
 
 export default tiposPost;

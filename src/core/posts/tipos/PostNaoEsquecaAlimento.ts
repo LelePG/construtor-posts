@@ -3,15 +3,14 @@ import PostBase from "../PostBase";
 export default class PostIngressosEsgotados extends PostBase {
 	gerar(): string {
 		return this.factory
-			.comCabecalhoOrganizacao("Ingressos Esgotados")
+			.comCabecalhoOrganizacao("Não esqueça seu alimento")
 			.comTexto(
-				`🚨 Os ingressos para o ${this.evento.nome} estão esgotados! 🚨`
+				"🍽️ Se você optou pelo ingresso + alimento, não esqueça de levar 1kg de alimento não perecível para o evento 🍽️"
 			)
 			.comTexto(
-				`Agradecemos imensamente a todos que garantiram sua presença. Estamos animados para compartilhar momentos incríveis com vocês no dia ${this.evento.data}.`
+				"Lembramos que a entrada de quem comprou este tipo de ingresso só será permitida para aqueles que apresentarem o alimento na entrada. Contamos com a sua colaboração!"
 			)
-			.comTexto(`Nos vemos no ${this.evento.nome}!`)
-			.comHashtags()
+			.comInscricaoELocal()
 			.comFinalizacao()
 			.gerar();
 	}
