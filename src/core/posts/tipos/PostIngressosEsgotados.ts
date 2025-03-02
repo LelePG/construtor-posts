@@ -3,7 +3,6 @@ import PostBase from "../PostBase";
 export default class PostIngressosEsgotados extends PostBase {
 	gerar(): string {
 		return this.factory
-			.comCabecalhoOrganizacao("Ingressos Esgotados")
 			.comTexto(
 				`🚨 Os ingressos para o ${this.evento.nome} estão esgotados! 🚨`
 			)
@@ -12,7 +11,6 @@ export default class PostIngressosEsgotados extends PostBase {
 			)
 			.comTexto(`Nos vemos no ${this.evento.nome}!`)
 			.comHashtags()
-			.comFinalizacao()
 			.gerar();
 	}
 }

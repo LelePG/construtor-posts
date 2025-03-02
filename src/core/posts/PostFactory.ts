@@ -22,25 +22,25 @@ class PostFactory {
 		return this;
 	}
 
-	comDivisorInicio(): PostFactory {
-		this.texto = `${"=".repeat(50)}\n${this.texto}`;
-		return this;
-	}
+	// comDivisorInicio(): PostFactory {
+	// 	this.texto = `${"=".repeat(50)}\n${this.texto}`;
+	// 	return this;
+	// }
 
-	comDivisorFim(): PostFactory {
-		this.texto += `${"=".repeat(50)}\n\n`;
-		return this;
-	}
+	// comDivisorFim(): PostFactory {
+	// 	this.texto += `${"=".repeat(50)}\n\n`;
+	// 	return this;
+	// }
 
-	comDivisorIntermediario(): PostFactory {
-		this.texto += `${"=".repeat(50)}\n`;
-		return this;
-	}
+	// comDivisorIntermediario(): PostFactory {
+	// 	this.texto += `${"=".repeat(50)}\n`;
+	// 	return this;
+	// }
 
-	comTituloOrganizacao(titulo: string): PostFactory {
-		this.texto += `Titulo da postagem: ${titulo}\n`;
-		return this;
-	}
+	// comTituloOrganizacao(titulo: string): PostFactory {
+	// 	this.texto += `Titulo da postagem: ${titulo}\n`;
+	// 	return this;
+	// }
 
 	comTexto(texto: string): PostFactory {
 		this.texto += `${texto}\n\n`;
@@ -62,15 +62,11 @@ class PostFactory {
 		return this;
 	}
 
-	comCabecalhoOrganizacao(titulo: string): PostFactory {
-		return this.comDivisorInicio()
-			.comTituloOrganizacao(titulo)
-			.comDivisorIntermediario();
-	}
-
-	comFinalizacao(): PostFactory {
-		return this.comHashtags().comDivisorFim();
-	}
+	// comCabecalhoOrganizacao(titulo: string): PostFactory {
+	// 	return this.comDivisorInicio()
+	// 		.comTituloOrganizacao(titulo)
+	// 		.comDivisorIntermediario();
+	// }
 
 	comInscricaoELocal(): PostFactory {
 		return this.comLinkInscricao().comDataHora().comLocal();

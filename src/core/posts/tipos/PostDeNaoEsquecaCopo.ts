@@ -3,7 +3,6 @@ import PostBase from "../PostBase";
 export default class PostNaoEsquecaCopo extends PostBase {
 	gerar(): string {
 		return this.factory
-			.comCabecalhoOrganizacao("Não esqueça seu copo")
 			.comTexto(`🌱 Traga seu copo para o ${this.evento.nome}! 💚`)
 			.comTexto(
 				"Pedimos que todos tragam seus copos reutilizáveis, pois não teremos copos descartáveis no evento."
@@ -16,7 +15,7 @@ export default class PostNaoEsquecaCopo extends PostBase {
 			)
 			.comTexto("Contamos com vocês!")
 			.comInscricaoELocal()
-			.comFinalizacao()
+			.comHashtags()
 			.gerar();
 	}
 }

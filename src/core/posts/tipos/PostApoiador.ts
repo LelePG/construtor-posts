@@ -7,14 +7,13 @@ export default class PostApoiador extends PostBase {
 
 	gerar({ apoiador }: { apoiador: string }): string {
 		return this.factory
-			.comCabecalhoOrganizacao(`Patrocinador ${apoiador.trim()}`)
 			.comTexto(
 				`🤝 O ${apoiador.trim()} é um patrocinador oficial do ${this.evento}!`
 			)
 			.comTexto(
 				`Agradecemos demais por possibilitar que o ${this.evento} seja possível!`
 			)
-			.comFinalizacao()
+			.comHashtags()
 			.gerar();
 	}
 }

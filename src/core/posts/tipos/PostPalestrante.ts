@@ -26,7 +26,6 @@ export default class PostPalestrante extends PostBase {
 		miniBioPalestrante: string;
 	}): string {
 		return this.factory
-			.comCabecalhoOrganizacao(`Palestrante ${nomePalestrante}`)
 			.comTexto(`📣 Palestra Confirmada ${this.evento.nome}!`)
 			.comTexto(`⭐ ${tituloPalestra}`)
 			.comTexto(`🎤 ${nomePalestrante}`)
@@ -35,7 +34,7 @@ export default class PostPalestrante extends PostBase {
 			.comTexto("📘 Bio do palestrante:")
 			.comTexto(miniBioPalestrante)
 			.comInscricaoELocal()
-			.comFinalizacao()
+			.comHashtags()
 			.gerar();
 	}
 }

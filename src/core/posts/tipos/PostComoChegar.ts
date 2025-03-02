@@ -3,7 +3,6 @@ import PostBase from "../PostBase";
 export default class PostComoChegar extends PostBase {
 	gerar(): string {
 		return this.factory
-			.comCabecalhoOrganizacao("Como Chegar")
 			.comTexto(`⏳ O ${this.evento.nome} está chegando!`)
 			.comTexto(
 				`O ${this.evento.nome} acontecerá dia ${this.evento.data} no ${this.evento.local}.`
@@ -14,7 +13,7 @@ export default class PostComoChegar extends PostBase {
 			.comTexto(
 				"Tem alguma dúvida de como chegar ao local do evento? Dá uma olhadinha no nosso guia!"
 			)
-			.comFinalizacao()
+			.comHashtags()
 			.gerar();
 	}
 }
