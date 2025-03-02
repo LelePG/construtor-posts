@@ -2,11 +2,11 @@ import PostBase from "../PostBase";
 
 export default class PostFaltamDias extends PostBase {
 	static obterParametros(): {
-		nome: string;
+		texto: string;
 		tipo: string;
-		label: string;
+		nome: string;
 	}[] {
-		return [{ nome: "Dias Faltantes", label: "diasFaltantes", tipo: "number" }];
+		return [{ texto: "Dias Faltantes", nome: "diasFaltantes", tipo: "number" }];
 	}
 
 	gerar({ diasFaltantes }: { diasFaltantes: number }): string {

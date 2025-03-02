@@ -2,7 +2,7 @@ import PostBase from "../PostBase";
 
 export default class EHoje extends PostBase {
 	gerar(): string {
-		const dataPostagem = new Date(`${this.evento.data}/2024`);
+		const dataPostagem = this.evento.datetime;
 		const dataFormatada = new Intl.DateTimeFormat("pt-BR").format(dataPostagem);
 		return this.factory
 			.comDivisorInicio()

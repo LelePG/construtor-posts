@@ -13,7 +13,7 @@ export default abstract class PostBase {
 	static obterParametros(): {
 		nome: string;
 		tipo: string;
-		label: string;
+		texto: string;
 	}[] {
 		return [];
 	}

@@ -27,7 +27,6 @@ export default function FormPost() {
 		PostSelecionado.current = tiposPost[tipoPostSelecionado!];
 
 		const parametros = PostSelecionado.current.obterParametros();
-		console.log(parametros);
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
@@ -52,10 +51,12 @@ export default function FormPost() {
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const { name, value } = e.target;
-		setParametrosAdicionais((prevParams: any) => ({
-			...prevParams,
-			[name]: value,
-		}));
+		setParametrosAdicionais((prevParams: any) => {
+			return {
+				...prevParams,
+				[name]: value,
+			};
+		});
 	};
 
 	return (
@@ -87,9 +88,10 @@ export default function FormPost() {
 				return (
 					<Input
 						key={param.nome}
-						texto={param.nome}
+						texto={param.texto}
 						id={param.nome}
 						tipo={param.tipo}
+						nome={param.nome}
 						valor={parametrosAdicionais[param.nome] || ""}
 						onChange={aoMudarParametrosAdicionais}
 						className="w-full p-2 "
