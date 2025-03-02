@@ -15,8 +15,10 @@ import PostPatrocinador from "./PostPatrocinador";
 import PostPalestrante from "./PostPalestrante";
 import PostNaoEsquecaCopo from "./PostDeNaoEsquecaCopo";
 import PostApoiador from "./PostApoiador";
+import PostGemini from "./PostComGemini";
 
 const tiposPost = {
+	comGemini: PostGemini,
 	ehAmanha: PostEAmanha,
 	ehHoje: PostEHoje,
 	faltamDias: PostFaltamDias,

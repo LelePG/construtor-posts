@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useEventos } from "@/data/hooks/useEventos";
-import { useRef } from "react";
 import { Button, Input, Select } from "../template";
 import tiposPost from "@/core/posts/tipos";
 import Exibir from "./Exibir";
@@ -18,6 +17,7 @@ export default function FormPost() {
 	const [parametrosAdicionais, setParametrosAdicionais] = useState<any>({});
 	const possiveisTipos = Object.keys(tiposPost);
 	const [postGerado, setPostGerado] = useState<string>("");
+	const [carregando, setCarregando] = useState<boolean>(false);
 
 	const PostSelecionado = useRef<any>(null);
 
@@ -26,11 +26,10 @@ export default function FormPost() {
 
 		PostSelecionado.current = tiposPost[tipoPostSelecionado!];
 
-		const parametros = PostSelecionado.current.obterParametros();
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
-	const aoSubmeter = (e: React.FormEvent) => {
+	const aoSubmeter = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (eventoSelecionado && tipoPostSelecionado) {
 			const evento = obterEvento(eventoSelecionado);
@@ -40,8 +39,15 @@ export default function FormPost() {
 				return;
 			}
 			const gerador = new PostSelecionado.current(evento);
-			const texto = gerador.gerar(parametrosAdicionais);
-			setPostGerado(texto);
+			setCarregando(true);
+			try {
+				const texto = await gerador.gerar(parametrosAdicionais);
+				setPostGerado(texto);
+			} catch (error) {
+				console.error("Erro ao gerar o post:", error);
+			} finally {
+				setCarregando(false);
+			}
 		} else {
 			console.log("Por favor, selecione um evento e um tipo de post.");
 		}
@@ -51,12 +57,10 @@ export default function FormPost() {
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const { name, value } = e.target;
-		setParametrosAdicionais((prevParams: any) => {
-			return {
-				...prevParams,
-				[name]: value,
-			};
-		});
+		setParametrosAdicionais((prevParams: any) => ({
+			...prevParams,
+			[name]: value,
+		}));
 	};
 
 	return (
@@ -84,23 +88,21 @@ export default function FormPost() {
 				}))}
 				onChange={(e: any) => setTipoPostSelecionado(e.target.value)}
 			/>
-			{listaParametrosAdicionais?.map((param: any) => {
-				return (
-					<Input
-						key={param.nome}
-						texto={param.texto}
-						id={param.nome}
-						tipo={param.tipo}
-						nome={param.nome}
-						valor={parametrosAdicionais[param.nome] || ""}
-						onChange={aoMudarParametrosAdicionais}
-						className="w-full p-2 "
-					/>
-				);
-			})}
+			{listaParametrosAdicionais?.map((param: any) => (
+				<Input
+					key={param.nome}
+					texto={param.texto}
+					id={param.nome}
+					tipo={param.tipo}
+					nome={param.nome}
+					valor={parametrosAdicionais[param.nome] || ""}
+					onChange={aoMudarParametrosAdicionais}
+					className="w-full p-2 "
+				/>
+			))}
 			<Button
 				onClick={() => {}}
-				texto="Gerar Post"
+				texto={carregando ? "Carregando..." : "Gerar Post"}
 				className="w-full p-2 bg-blue-500 text-white rounded-md"
 			/>
 			<Exibir texto={postGerado} setTexto={setPostGerado} />

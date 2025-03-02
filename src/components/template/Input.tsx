@@ -7,7 +7,7 @@ interface InputProps {
 	placeholder?: string;
 	valor: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	nome: string;
+	nome?: string;
 	className?: string;
 }
 
@@ -32,6 +32,7 @@ export default function Input(props: InputProps) {
 				name={nome}
 				value={valor}
 				onChange={onChange}
+				autoComplete="off"
 				className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 			/>
 		</div>

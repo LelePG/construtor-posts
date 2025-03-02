@@ -18,5 +18,5 @@ export default abstract class PostBase {
 		return [];
 	}
 
-	abstract gerar(parametros: any): string;
+	abstract gerar(parametros: any): string | Promise<string>;
 }
