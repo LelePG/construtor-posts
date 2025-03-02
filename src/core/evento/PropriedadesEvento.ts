@@ -4,4 +4,5 @@ export interface PropriedadesEvento {
 	local: string;
 	datetime: Date;
 	hashtags: string;
+	id: string;
 }

@@ -5,9 +5,8 @@ import Evento from "@/core/evento/Evento";
 
 interface EventoContextProps {
 	eventos: Evento[];
-	adicionarEvento: (evento: PropriedadesEvento) => void;
+	salvarEvento: (evento: PropriedadesEvento) => void;
 	removerEvento: (id: string) => void;
-	atualizarEvento: (nome: string, evento: PropriedadesEvento) => void;
 	obterEvento: (id: string) => Evento | undefined;
 }
 
@@ -26,6 +25,7 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 			local: "Pelotas Parque tecnológico",
 			datetime: new Date("2025-02-23T13:59:01.882Z"),
 			hashtags: "#teste #vaiDarCerto",
+			id: "1",
 		});
 		gerenciadorEventos.criar({
 			nome: "ww",
@@ -33,6 +33,7 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 			local: "ww",
 			datetime: new Date("2025-02-23T13:59:07.013Z"),
 			hashtags: "ww",
+			id: "2",
 		});
 		setEventos(gerenciadorEventos.listarEventos());
 	}, []);
@@ -47,22 +48,30 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 		setEventos(gerenciadorEventos.listarEventos());
 	}
 
-	function atualizarEvento(nome: string, evento: PropriedadesEvento) {
-		gerenciadorEventos.atualizar(nome, evento);
+	function atualizarEvento(id: string, evento: PropriedadesEvento) {
+		console.log("atualizando evento", id, evento);
+		gerenciadorEventos.atualizar(id, evento);
 		setEventos(gerenciadorEventos.listarEventos());
 	}
 
-	function obterEvento(nome: string): Evento | undefined {
-		return gerenciadorEventos.obter(nome);
+	function obterEvento(id: string): Evento | undefined {
+		return gerenciadorEventos.obter(id);
+	}
+
+	function salvarEvento(props: PropriedadesEvento) {
+		if (props.id && obterEvento(props.id)) {
+			atualizarEvento(props.id, props);
+		} else {
+			adicionarEvento(props);
+		}
 	}
 
 	return (
 		<EventoContext.Provider
 			value={{
 				eventos,
-				adicionarEvento,
+				salvarEvento,
 				removerEvento,
-				atualizarEvento,
 				obterEvento,
 			}}
 		>

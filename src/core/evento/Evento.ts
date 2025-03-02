@@ -1,53 +1,61 @@
 import { PropriedadesEvento } from "./PropriedadesEvento";
 
 export default class Evento {
-	private propriedades: PropriedadesEvento;
+	private _propriedades: PropriedadesEvento;
 
 	constructor(propriedades: PropriedadesEvento) {
-		this.propriedades = {
+		this._propriedades = {
 			...propriedades,
 			nome: propriedades.nome.toLowerCase().trim(),
 		};
 	}
 
+	get propriedades(): PropriedadesEvento {
+		return this._propriedades;
+	}
+
+	get id(): string {
+		return this._propriedades.id;
+	}
+
 	get nome(): string {
-		return this.propriedades.nome.toLowerCase().trim();
+		return this._propriedades.nome.toLowerCase().trim();
 	}
 
 	get linkInscricao(): string {
-		return this.propriedades.linkInscricao;
+		return this._propriedades.linkInscricao;
 	}
 
 	get local(): string {
-		return this.propriedades.local;
+		return this._propriedades.local;
 	}
 
 	get datetime(): Date {
-		return this.propriedades.datetime;
+		return this._propriedades.datetime;
 	}
 
 	get hashtags(): string {
-		return this.propriedades.hashtags;
+		return this._propriedades.hashtags;
 	}
 
 	get data(): string {
-		const dia = this.propriedades.datetime
+		const dia = this._propriedades.datetime
 			.getDate()
 			.toString()
 			.padStart(2, "0");
-		const mes = (this.propriedades.datetime.getMonth() + 1)
+		const mes = (this._propriedades.datetime.getMonth() + 1)
 			.toString()
 			.padStart(2, "0");
-		const ano = this.propriedades.datetime.getFullYear();
+		const ano = this._propriedades.datetime.getFullYear();
 		return `${dia}/${mes}/${ano}`;
 	}
 
 	get hora(): string {
-		const hora = this.propriedades.datetime
+		const hora = this._propriedades.datetime
 			.getHours()
 			.toString()
 			.padStart(2, "0");
-		const minuto = this.propriedades.datetime
+		const minuto = this._propriedades.datetime
 			.getMinutes()
 			.toString()
 			.padStart(2, "0");
@@ -55,8 +63,8 @@ export default class Evento {
 	}
 
 	atualizarPropriedades(propriedades: Partial<PropriedadesEvento>): void {
-		this.propriedades = {
-			...this.propriedades,
+		this._propriedades = {
+			...this._propriedades,
 			...propriedades,
 		};
 	}

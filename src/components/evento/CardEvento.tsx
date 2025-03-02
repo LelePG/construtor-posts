@@ -4,8 +4,8 @@ import { Button } from "../template";
 
 interface CardEventoProps {
 	evento: Evento;
-	removerEvento: (nome: string) => void;
-	editarEvento: (nome: string) => void;
+	removerEvento: (id: string) => void;
+	editarEvento: (id: string) => void;
 }
 
 export default function CardEvento({
@@ -22,8 +22,8 @@ export default function CardEvento({
 			<p className="text-gray-600">Hashtags: {evento.hashtags}</p>
 			<p className="text-gray-600">Inscrição: {evento.linkInscricao}</p>
 			<div className="flex gap-4">
-				<Button texto="Editar" onClick={() => editarEvento(evento.nome)} />
-				<Button texto="Excluir" onClick={() => removerEvento(evento.nome)} />
+				<Button texto="Editar" onClick={() => editarEvento(evento.id)} />
+				<Button texto="Excluir" onClick={() => removerEvento(evento.id)} />
 			</div>
 		</div>
 	);

@@ -8,22 +8,16 @@ export default class GerenciadorEventos {
 		this.eventos.push(new Evento(propriedades));
 	}
 
-	ler(nome: string): Evento | undefined {
-		return this.eventos.find(
-			(evento) => evento.nome === nome.toLowerCase().trim()
-		);
-	}
-
-	atualizar(nome: string, propriedades: Partial<PropriedadesEvento>): void {
+	atualizar(id: string, propriedades: Partial<PropriedadesEvento>): void {
 		const index = this.eventos.findIndex(
-			(evento) => evento.nome === nome.toLowerCase().trim()
+			(evento) => evento.id === id.toLowerCase().trim()
 		);
 		this.eventos[index].atualizarPropriedades(propriedades);
 	}
 
-	deletar(nome: string): boolean {
+	deletar(id: string): boolean {
 		const index = this.eventos.findIndex(
-			(evento) => evento.nome === nome.toLowerCase().trim()
+			(evento) => evento.id === id.toLowerCase().trim()
 		);
 		if (index !== -1) {
 			this.eventos.splice(index, 1);
@@ -32,10 +26,8 @@ export default class GerenciadorEventos {
 		return false;
 	}
 
-	obter(nome: string): Evento | undefined {
-		return this.eventos.find(
-			(evento) => evento.nome === nome.toLowerCase().trim()
-		);
+	obter(id: string): Evento | undefined {
+		return this.eventos.find((evento) => evento.id === id.toLowerCase().trim());
 	}
 
 	listarEventos(): Evento[] {

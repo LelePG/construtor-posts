@@ -73,7 +73,7 @@ export default function FormPost() {
 				id="event"
 				valor={eventoSelecionado}
 				opcoes={eventos.map((event) => ({
-					valor: event.nome,
+					valor: event.id,
 					texto: event.nome,
 				}))}
 				onChange={(e) => setEventoSelecionado(e.target.value)}

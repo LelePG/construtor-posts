@@ -2,43 +2,44 @@
 import React, { useState } from "react";
 import { Button, Input } from "../template";
 import { PropriedadesEvento } from "@/core/evento/PropriedadesEvento";
-import { useEventos } from "@/data/hooks/useEventos";
 
 interface FormPropriedadesProps {
-	aposEnviar?: () => void;
+	props?: PropriedadesEvento;
+	salvar: (propriedades: PropriedadesEvento) => void;
+	cancelar: () => void;
 }
 
 export default function FormPropriedades({
-	aposEnviar,
+	props,
+	salvar,
+	cancelar,
 }: FormPropriedadesProps) {
-	const eventos = useEventos();
 	const [propriedades, setPropriedades] = useState<PropriedadesEvento>({
-		nome: "",
-		linkInscricao: "",
-		local: "",
-		datetime: new Date(),
-		hashtags: "",
+		id: props?.id || "",
+		nome: props?.nome || "",
+		linkInscricao: props?.linkInscricao || "",
+		local: props?.local || "",
+		datetime: props?.datetime || new Date(),
+		hashtags: props?.hashtags || "",
 	});
 
 	const aoModificarPropriedade = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { id, value } = e.target;
 		setPropriedades((prevState) => ({
 			...prevState,
-			[name]: name === "datetime" ? new Date(value) : value,
+			[id]: id === "datetime" ? new Date(value) : value,
 		}));
 	};
 
-	const aoSubmeter = (e: React.FormEvent) => {
-		e.preventDefault();
-		eventos.adicionarEvento(propriedades);
-		if (aposEnviar) {
-			aposEnviar();
-		}
-	};
-
 	return (
-		<form onSubmit={aoSubmeter} className="max-w-lg mx-auto p-4">
+		<div className="max-w-lg mx-auto p-4">
 			<h1 className="text-2xl font-bold mb-4">Criar Postagem</h1>
+			<Input
+				texto="ID"
+				id="id"
+				valor={propriedades.id}
+				onChange={aoModificarPropriedade}
+			/>
 			<Input
 				texto="Evento"
 				id="nome"
@@ -77,11 +78,19 @@ export default function FormPropriedades({
 				valor={propriedades.hashtags}
 				onChange={aoModificarPropriedade}
 			/>
-			<Button
-				onClick={() => {}}
-				texto="Salvar"
-				className="bg-blue-500 hover:bg-blue-700"
-			/>
-		</form>
+			<div className="flex gap-4">
+				<Button
+					onClick={() => salvar(propriedades)}
+					texto="Salvar"
+					className="bg-blue-500 hover:bg-blue-700"
+				/>
+
+				<Button
+					onClick={cancelar}
+					texto="Cancelar"
+					className="bg-red-500 hover:bg-red-700"
+				/>
+			</div>
+		</div>
 	);
 }
