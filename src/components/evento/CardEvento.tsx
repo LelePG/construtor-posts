@@ -23,7 +23,11 @@ export default function CardEvento({
 			<p className="text-gray-600">Inscrição: {evento.linkInscricao}</p>
 			<div className="flex gap-4">
 				<Button texto="Editar" onClick={() => editarEvento(evento.id)} />
-				<Button texto="Excluir" onClick={() => removerEvento(evento.id)} />
+				<Button
+					texto="Excluir"
+					className="bg-red-500 hover:bg-red-700"
+					onClick={() => removerEvento(evento.id)}
+				/>
 			</div>
 		</div>
 	);

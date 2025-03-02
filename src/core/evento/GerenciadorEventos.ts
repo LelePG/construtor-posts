@@ -4,6 +4,16 @@ import Evento from "./Evento";
 export default class GerenciadorEventos {
 	private eventos: Evento[] = [];
 
+	carregar(propriedades: PropriedadesEvento[]): void {
+		if (!propriedades) return;
+		propriedades.forEach((propriedades) => {
+			this.criar({
+				...propriedades,
+				datetime: new Date(propriedades.datetime),
+			});
+		});
+	}
+
 	criar(propriedades: PropriedadesEvento): void {
 		this.eventos.push(new Evento(propriedades));
 	}

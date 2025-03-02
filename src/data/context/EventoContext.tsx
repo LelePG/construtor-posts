@@ -2,6 +2,7 @@ import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { PropriedadesEvento } from "@/core/evento/PropriedadesEvento";
 import GerenciadorEventos from "@/core/evento/GerenciadorEventos";
 import Evento from "@/core/evento/Evento";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 interface EventoContextProps {
 	eventos: Evento[];
@@ -17,41 +18,33 @@ export const EventoContext = createContext<EventoContextProps | undefined>(
 export const EventoProvider = ({ children }: { children: ReactNode }) => {
 	const gerenciadorEventos = React.useRef(new GerenciadorEventos()).current;
 	const [eventos, setEventos] = useState<Evento[]>([]);
+	const { pegarValorStorage, setarValorStorage } = useLocalStorage("eventos");
+
+	function refreshEventos() {
+		const eventos = gerenciadorEventos.listarEventos();
+		setarValorStorage(eventos.map((evento) => evento.propriedades));
+		setEventos(eventos);
+	}
 
 	useEffect(() => {
-		gerenciadorEventos.criar({
-			nome: "Evento Muito Legal",
-			linkInscricao: "https://www.google.com",
-			local: "Pelotas Parque tecnológico",
-			datetime: new Date("2025-02-23T13:59:01.882Z"),
-			hashtags: "#teste #vaiDarCerto",
-			id: "1",
-		});
-		gerenciadorEventos.criar({
-			nome: "ww",
-			linkInscricao: "ww",
-			local: "ww",
-			datetime: new Date("2025-02-23T13:59:07.013Z"),
-			hashtags: "ww",
-			id: "2",
-		});
-		setEventos(gerenciadorEventos.listarEventos());
+		const eventos = pegarValorStorage();
+		gerenciadorEventos.carregar(eventos);
+		refreshEventos();
 	}, []);
 
 	function adicionarEvento(propriedades: PropriedadesEvento) {
 		gerenciadorEventos.criar(propriedades);
-		setEventos(gerenciadorEventos.listarEventos());
+		refreshEventos();
 	}
 
 	function removerEvento(id: string) {
 		gerenciadorEventos.deletar(id);
-		setEventos(gerenciadorEventos.listarEventos());
+		refreshEventos();
 	}
 
 	function atualizarEvento(id: string, evento: PropriedadesEvento) {
-		console.log("atualizando evento", id, evento);
 		gerenciadorEventos.atualizar(id, evento);
-		setEventos(gerenciadorEventos.listarEventos());
+		refreshEventos();
 	}
 
 	function obterEvento(id: string): Evento | undefined {

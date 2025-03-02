@@ -56,10 +56,10 @@ export default function FormPost() {
 	const aoMudarParametrosAdicionais = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const { name, value } = e.target;
+		const { id, value } = e.target;
 		setParametrosAdicionais((prevParams: any) => ({
 			...prevParams,
-			[name]: value,
+			[id]: value,
 		}));
 	};
 
