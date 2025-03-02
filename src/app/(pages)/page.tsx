@@ -11,10 +11,10 @@ export default function Home() {
 					Descrição da Postagem
 				</h2>
 				<Link
-					href="/propriedades-evento"
+					href="/eventos"
 					className="my-5 font-bold border border-blue-500 text-blue-500 py-3 px-8 rounded-lg hover:bg-blue-500 hover:text-gray-50"
 				>
-					Criar Novo Evento
+					Gerenciar Eventos
 				</Link>
 				<FormPost />
 			</section>
