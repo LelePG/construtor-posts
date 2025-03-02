@@ -7,7 +7,6 @@ interface InputProps {
 	placeholder?: string;
 	valor: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	nome?: string;
 	className?: string;
 }
 
@@ -20,7 +19,6 @@ export default function Input(props: InputProps) {
 		valor,
 		onChange,
 		className,
-		nome,
 	} = props;
 	return (
 		<div className={twMerge(className)}>
@@ -29,7 +27,6 @@ export default function Input(props: InputProps) {
 				id={id}
 				type={tipo}
 				placeholder={placeholder}
-				name={nome}
 				value={valor}
 				onChange={onChange}
 				autoComplete="off"

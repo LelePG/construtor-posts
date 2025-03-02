@@ -94,7 +94,6 @@ export default function FormPost() {
 					texto={param.texto}
 					id={param.nome}
 					tipo={param.tipo}
-					nome={param.nome}
 					valor={parametrosAdicionais[param.nome] || ""}
 					onChange={aoMudarParametrosAdicionais}
 					className="w-full p-2 "
