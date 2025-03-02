@@ -32,64 +32,74 @@ export default function FormPropriedades({
 	};
 
 	return (
-		<div className="max-w-lg mx-auto p-4">
-			<h1 className="text-2xl font-bold mb-4">Criar Postagem</h1>
-			<Input
-				texto="ID"
-				id="id"
-				valor={propriedades.id}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Evento"
-				id="nome"
-				valor={propriedades.nome}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Link de Inscrição"
-				id="linkInscricao"
-				valor={propriedades.linkInscricao}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Local"
-				id="local"
-				valor={propriedades.local}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Data"
-				id="datetime"
-				tipo="date"
-				valor={propriedades.datetime.toISOString().split("T")[0]}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Hora"
-				id="hora"
-				tipo="time"
-				valor={propriedades.datetime.toTimeString().split(" ")[0]}
-				onChange={aoModificarPropriedade}
-			/>
-			<Input
-				texto="Hashtags"
-				id="hashtags"
-				valor={propriedades.hashtags}
-				onChange={aoModificarPropriedade}
-			/>
-			<div className="flex gap-4">
-				<Button
-					onClick={() => salvar(propriedades)}
-					texto="Salvar"
-					className="bg-blue-500 hover:bg-blue-700"
+		<div className="max-w-lg mx-auto  rounded-lg  p-4">
+			<h2 className="text-4xl font-bold m-6 text-center text-gray-50">
+				Criar Postagem
+			</h2>
+			<div className="space-y-4 bg-white p-6  shadow-md rounded-lg">
+				<Input
+					texto="ID"
+					id="id"
+					valor={propriedades.id}
+					onChange={aoModificarPropriedade}
+					className="w-full"
 				/>
-
-				<Button
-					onClick={cancelar}
-					texto="Cancelar"
-					className="bg-red-500 hover:bg-red-700"
+				<Input
+					texto="Evento"
+					id="nome"
+					valor={propriedades.nome}
+					onChange={aoModificarPropriedade}
+					className="w-full"
 				/>
+				<Input
+					texto="Link de Inscrição"
+					id="linkInscricao"
+					valor={propriedades.linkInscricao}
+					onChange={aoModificarPropriedade}
+					className="w-full"
+				/>
+				<Input
+					texto="Local"
+					id="local"
+					valor={propriedades.local}
+					onChange={aoModificarPropriedade}
+					className="w-full"
+				/>
+				<Input
+					texto="Data"
+					id="datetime"
+					tipo="date"
+					valor={propriedades.datetime.toISOString().split("T")[0]}
+					onChange={aoModificarPropriedade}
+					className="w-full"
+				/>
+				<Input
+					texto="Hora"
+					id="hora"
+					tipo="time"
+					valor={propriedades.datetime.toTimeString().split(" ")[0]}
+					onChange={aoModificarPropriedade}
+					className="w-full"
+				/>
+				<Input
+					texto="Hashtags"
+					id="hashtags"
+					valor={propriedades.hashtags}
+					onChange={aoModificarPropriedade}
+					className="w-full"
+				/>
+				<div className="flex gap-4 mt-6">
+					<Button
+						onClick={() => salvar(propriedades)}
+						texto="Salvar"
+						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+					/>
+					<Button
+						onClick={cancelar}
+						texto="Cancelar"
+						className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+					/>
+				</div>
 			</div>
 		</div>
 	);

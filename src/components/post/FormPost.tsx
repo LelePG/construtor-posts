@@ -29,8 +29,7 @@ export default function FormPost() {
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
-	const aoSubmeter = async (e: React.FormEvent) => {
-		e.preventDefault();
+	const gerarPost = async () => {
 		if (eventoSelecionado && tipoPostSelecionado) {
 			const evento = obterEvento(eventoSelecionado);
 
@@ -49,7 +48,7 @@ export default function FormPost() {
 				setCarregando(false);
 			}
 		} else {
-			console.log("Por favor, selecione um evento e um tipo de post.");
+			window.alert("Por favor, selecione um evento e um tipo de post.");
 		}
 	};
 
@@ -64,10 +63,7 @@ export default function FormPost() {
 	};
 
 	return (
-		<form
-			onSubmit={aoSubmeter}
-			className="my-4 p-4 bg-gray-50 shadow-md rounded-md"
-		>
+		<div className="my-4 p-4 bg-gray-50 shadow-md rounded-md">
 			<Select
 				texto="Escolha um evento:"
 				id="event"
@@ -100,11 +96,11 @@ export default function FormPost() {
 				/>
 			))}
 			<Button
-				onClick={() => {}}
+				onClick={() => gerarPost()}
 				texto={carregando ? "Carregando..." : "Gerar Post"}
 				className="w-full p-2 bg-blue-500 text-white rounded-md"
 			/>
 			<Exibir texto={postGerado} setTexto={setPostGerado} />
-		</form>
+		</div>
 	);
 }
