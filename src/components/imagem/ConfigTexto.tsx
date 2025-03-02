@@ -75,7 +75,6 @@ export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
 							{ valor: "centro", texto: "Centro" },
 							{ valor: "direita", texto: "Direita" },
 						]}
-						className="flex gap-2 items-center"
 					/>
 				</div>
 			</div>

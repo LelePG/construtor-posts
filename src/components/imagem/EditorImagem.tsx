@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
 import UploadImagem from "./UploadImagem";
 import ConfigTexto from "./ConfigTexto";
@@ -20,10 +20,6 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 	const [textos, setTextos] = useState<Texto[]>([]);
 	const [indiceTextoAtual, setIndiceTextoAtual] = useState<number | null>(null);
 	const imagemRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		aoAdicionarTexto();
-	}, []);
 
 	const aoSubirImagem = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const arquivo = e.target.files?.[0];
@@ -47,7 +43,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		link.click();
 	};
 
-	const aoClicar = (index: number) => (e: React.MouseEvent) => {
+	const moverTexto = (index: number) => (e: React.MouseEvent) => {
 		const xInicial = e.clientX;
 		const yInicial = e.clientY;
 		const xInicialTexto = textos[index].posicao.x;
@@ -100,57 +96,63 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 				className
 			)}
 		>
-			<div className="flex items-end">
-				<UploadImagem onImageUpload={aoSubirImagem} />
-			</div>
+			<UploadImagem onImageUpload={aoSubirImagem} />
 
-			{imagem && indiceTextoAtual !== null && (
-				<div className="flex gap-4 my-5 p-3">
-					<div className="flex  flex-col   border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
-						<ConfigTexto
-							config={textos[indiceTextoAtual]}
-							setConfig={(config) => {
-								const novosTextos = [...textos];
-								novosTextos[indiceTextoAtual] = {
-									...config,
-									posicao: novosTextos[indiceTextoAtual].posicao,
-								};
-								setTextos(novosTextos);
-							}}
-						/>
-						<Button
-							onClick={aoAdicionarTexto}
-							texto="Adicionar Texto"
-							className="w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
-						/>
-						<Button
-							onClick={aoSalvarImagem}
-							texto="Salvar Imagem"
-							className="mt-4 w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
-						/>
-					</div>
-					<div ref={imagemRef} className="relative max-w-screen-lg">
-						{imagem && (
-							<img
-								src={imagem}
-								alt="Uploaded"
-								className="border-2 border-black  object-cover "
+			<div className="flex gap-4 my-5 p-3 ">
+				{imagem && (
+					<div className="flex flex-col w-1/3 border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
+						<div className="my-2">
+							<Button
+								onClick={aoAdicionarTexto}
+								texto="Adicionar Texto"
+								className="w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+							/>
+							<Button
+								onClick={aoSalvarImagem}
+								texto="Salvar Imagem"
+								className="mt-4 w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+							/>
+						</div>
+						{indiceTextoAtual !== null && textos.length > 0 && (
+							<ConfigTexto
+								config={textos[indiceTextoAtual]}
+								setConfig={(config) => {
+									const novosTextos = [...textos];
+									novosTextos[indiceTextoAtual] = {
+										...config,
+										posicao: novosTextos[indiceTextoAtual].posicao,
+									};
+									setTextos(novosTextos);
+								}}
 							/>
 						)}
-
-						{imagem &&
-							textos.map((obj, index) => (
-								<TextoItem
-									config={obj}
-									key={index}
-									posicao={obj.posicao}
-									onMouseDown={aoClicar(index)}
-									onClick={() => setIndiceTextoAtual(index)}
-								/>
-							))}
 					</div>
+				)}
+				<div ref={imagemRef} className="relative max-w-screen-lg">
+					{imagem && (
+						<img
+							src={imagem}
+							alt="Uploaded"
+							className="border-2 border-black  object-cover "
+							onClick={(e) => {
+								setIndiceTextoAtual(null);
+							}}
+						/>
+					)}
+
+					{imagem &&
+						textos.map((obj, index) => (
+							<TextoItem
+								config={obj}
+								key={index}
+								posicao={obj.posicao}
+								isSelecionado={indiceTextoAtual === index}
+								onMouseDown={moverTexto(index)}
+								onClick={() => setIndiceTextoAtual(index)}
+							/>
+						))}
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }

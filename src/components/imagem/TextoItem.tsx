@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextoConfig } from "@/core/texto/TextoConfig";
 
 interface TextItemProps {
@@ -6,6 +6,7 @@ interface TextItemProps {
 	posicao: { x: number; y: number };
 	onMouseDown: (e: React.MouseEvent) => void;
 	onClick: () => void;
+	isSelecionado: boolean;
 }
 
 export default function TextoItem({
@@ -13,6 +14,7 @@ export default function TextoItem({
 	posicao,
 	onMouseDown,
 	onClick,
+	isSelecionado,
 }: TextItemProps) {
 	const [resizeState, setResizeState] = useState({
 		largura: 200,
@@ -57,7 +59,7 @@ export default function TextoItem({
 		}));
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		document.addEventListener("mousemove", handleMouseMove);
 		document.addEventListener("mouseup", handleMouseUp);
 
@@ -69,7 +71,9 @@ export default function TextoItem({
 
 	return (
 		<div
-			className="absolute border-2 border-red-500 leading-tight cursor-move"
+			className={`absolute border-2 leading-tight cursor-move select-none ${
+				isSelecionado ? "border-red-500" : "border-transparent"
+			}`}
 			style={{
 				left: `${posicao.x}px`,
 				top: `${posicao.y}px`,
@@ -88,7 +92,9 @@ export default function TextoItem({
 
 			<div
 				onMouseDown={handleMouseDownResize}
-				className="w-1 h-full bg-blue-500 cursor-ew-resize absolute right-0 top-0"
+				className={`w-1 h-full ${
+					isSelecionado ? "bg-fuchsia-500" : "bg-transparent"
+				} cursor-ew-resize absolute right-0 top-0`}
 			/>
 		</div>
 	);
