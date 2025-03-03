@@ -23,11 +23,30 @@ export default function FormPropriedades({
 		hashtags: props?.hashtags || "",
 	});
 
+	function validaPropriedades(chave: string, valor: any) {
+		if (chave === "data") {
+			const [year, month, day] = valor.split("-");
+			const novaData = new Date(propriedades.datetime);
+			novaData.setFullYear(parseInt(year, 10));
+			novaData.setMonth(parseInt(month, 10) - 1);
+			novaData.setDate(parseInt(day, 10));
+			return novaData;
+		} else if (chave === "hora") {
+			const [hours, minutes] = valor.split(":");
+			const novaData = new Date(propriedades.datetime);
+			novaData.setHours(parseInt(hours, 10));
+			novaData.setMinutes(parseInt(minutes, 10));
+			return novaData;
+		}
+		return valor;
+	}
+
 	const aoModificarPropriedade = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;
+		const chave = id === "data" || id === "hora" ? "datetime" : id;
 		setPropriedades((prevState) => ({
 			...prevState,
-			[id]: id === "datetime" ? new Date(value) : value,
+			[chave]: validaPropriedades(id, value),
 		}));
 	};
 
@@ -67,7 +86,7 @@ export default function FormPropriedades({
 				/>
 				<Input
 					texto="Data"
-					id="datetime"
+					id="data"
 					tipo="date"
 					valor={propriedades.datetime.toISOString().split("T")[0]}
 					onChange={aoModificarPropriedade}
