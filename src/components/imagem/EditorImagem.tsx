@@ -116,10 +116,10 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		>
 			<UploadImagem onImageUpload={aoSubirImagem} />
 
-			<div className="flex gap-4 p-3 ">
+			<div className="flex flex-col 2xl:flex-row gap-4 p-3 ">
 				{imagem && (
-					<div className="w-1/3 flex flex-col border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
-						<div className="my-0 flex flex-col gap-2">
+					<div className="2xl:w-1/3 min-w-fit w-full flex flex-col border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
+						<div className="my-0 flex 2xl:flex-col gap-2">
 							<Button
 								onClick={aoAdicionarTexto}
 								texto="Adicionar Texto"
