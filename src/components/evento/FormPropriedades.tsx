@@ -41,14 +41,14 @@ export default function FormPropriedades({
 		return valor;
 	}
 
-	const aoModificarPropriedade = (e: React.ChangeEvent<HTMLInputElement>) => {
+	function aoModificarPropriedade(e: React.ChangeEvent<HTMLInputElement>) {
 		const { id, value } = e.target;
 		const chave = id === "data" || id === "hora" ? "datetime" : id;
 		setPropriedades((prevState) => ({
 			...prevState,
 			[chave]: validaPropriedades(id, value),
 		}));
-	};
+	}
 
 	return (
 		<div className="max-w-lg mx-auto  rounded-lg  p-4">

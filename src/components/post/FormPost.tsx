@@ -12,8 +12,9 @@ export default function FormPost() {
 	const [tipoPostSelecionado, setTipoPostSelecionado] = useState<
 		keyof typeof tiposPost | null
 	>(null);
-	const [listaParametrosAdicionais, setListaParametrosAdicionais] =
-		useState<any>([]);
+	const [listaParametrosAdicionais, setListaParametrosAdicionais] = useState(
+		[]
+	);
 	const [parametrosAdicionais, setParametrosAdicionais] = useState<any>({});
 	const possiveisTipos = Object.keys(tiposPost);
 	const [postGerado, setPostGerado] = useState<string>("");
@@ -29,7 +30,7 @@ export default function FormPost() {
 		setListaParametrosAdicionais(PostSelecionado.current.obterParametros());
 	}, [tipoPostSelecionado]);
 
-	const gerarPost = async () => {
+	async function gerarPost() {
 		if (eventoSelecionado && tipoPostSelecionado) {
 			const evento = obterEvento(eventoSelecionado);
 
@@ -50,17 +51,15 @@ export default function FormPost() {
 		} else {
 			window.alert("Por favor, selecione um evento e um tipo de post.");
 		}
-	};
+	}
 
-	const aoMudarParametrosAdicionais = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
+	function aoMudarParametrosAdicionais(e: React.ChangeEvent<HTMLInputElement>) {
 		const { id, value } = e.target;
 		setParametrosAdicionais((prevParams: any) => ({
 			...prevParams,
 			[id]: value,
 		}));
-	};
+	}
 
 	return (
 		<div className="my-4 p-4 bg-gray-50 shadow-md rounded-md">

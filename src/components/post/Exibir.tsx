@@ -9,11 +9,11 @@ interface ExibirProps {
 export default function Exibir({ texto, setTexto }: ExibirProps) {
 	const [copiar, setCopiar] = useState(false);
 
-	const aoCopiar = () => {
+	function aoCopiar() {
 		navigator.clipboard.writeText(texto);
 		setCopiar(true);
 		setTimeout(() => setCopiar(false), 2000);
-	};
+	}
 
 	return (
 		<div className="mt-4  ">

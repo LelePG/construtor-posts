@@ -8,7 +8,7 @@ export function useResize(elementRef: React.RefObject<HTMLElement | null>) {
 		startWidth: 200,
 	});
 
-	const handleResize = (e: React.MouseEvent) => {
+	function handleResize(e: React.MouseEvent) {
 		e.stopPropagation();
 		setResizeState((prevState) => ({
 			...prevState,
@@ -16,9 +16,9 @@ export function useResize(elementRef: React.RefObject<HTMLElement | null>) {
 			startX: e.clientX,
 			startWidth: prevState.largura,
 		}));
-	};
+	}
 
-	const handleMouseMove = (e: MouseEvent) => {
+	function handleMouseMove(e: MouseEvent) {
 		if (resizeState.isResizing) {
 			const newWidth =
 				resizeState.startWidth + (e.clientX - resizeState.startX);
@@ -27,14 +27,14 @@ export function useResize(elementRef: React.RefObject<HTMLElement | null>) {
 				largura: newWidth > 50 ? newWidth : 70,
 			}));
 		}
-	};
+	}
 
-	const handleMouseUp = () => {
+	function handleMouseUp() {
 		setResizeState((prevState) => ({
 			...prevState,
 			isResizing: false,
 		}));
-	};
+	}
 
 	useEffect(() => {
 		const element = elementRef.current;

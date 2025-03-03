@@ -7,9 +7,9 @@ interface ConfigTextoProps {
 }
 
 export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
-	const aoMudarConfig = (key: string, value: any) => {
+	function aoMudarConfig(key: string, value: any) {
 		setConfig({ ...config, [key]: value });
-	};
+	}
 
 	return (
 		<div className="2xl:max-w-72 my-3 flex flex-wrap 2xl:flex-col gap-4 items-baseline  w-full ">

@@ -15,7 +15,7 @@ export const EventoContext = createContext<EventoContextProps | undefined>(
 	undefined
 );
 
-export const EventoProvider = ({ children }: { children: ReactNode }) => {
+export function EventoProvider({ children }: { children: ReactNode }) {
 	const gerenciadorEventos = React.useRef(new GerenciadorEventos()).current;
 	const [eventos, setEventos] = useState<Evento[]>([]);
 	const { pegarValorStorage, setarValorStorage } = useLocalStorage("eventos");
@@ -30,7 +30,7 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 		const eventos = pegarValorStorage();
 		gerenciadorEventos.carregar(eventos);
 		refreshEventos();
-	}, []);
+	}, [gerenciadorEventos, pegarValorStorage]);
 
 	function adicionarEvento(propriedades: PropriedadesEvento) {
 		gerenciadorEventos.criar(propriedades);
@@ -71,4 +71,4 @@ export const EventoProvider = ({ children }: { children: ReactNode }) => {
 			{children}
 		</EventoContext.Provider>
 	);
-};
+}

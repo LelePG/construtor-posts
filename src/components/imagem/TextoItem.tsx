@@ -11,9 +11,9 @@ interface TextItemProps {
 	onClick: () => void;
 }
 
-const getAlinhamento = (
+function getAlinhamento(
 	justificacao: string
-): React.CSSProperties["textAlign"] => {
+): React.CSSProperties["textAlign"] {
 	switch (justificacao) {
 		case "centro":
 			return "center";
@@ -22,7 +22,7 @@ const getAlinhamento = (
 		default:
 			return "left";
 	}
-};
+}
 
 export default function TextoItem({
 	config,

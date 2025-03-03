@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import UploadImagem from "./UploadImagem";
 import ConfigTexto from "./ConfigTexto";
@@ -21,7 +21,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 	const [indiceTextoAtual, setIndiceTextoAtual] = useState<number | null>(null);
 	const imagemRef = useRef<HTMLDivElement>(null);
 
-	const aoSubirImagem = (e: React.ChangeEvent<HTMLInputElement>) => {
+	function aoSubirImagem(e: React.ChangeEvent<HTMLInputElement>) {
 		const arquivo = e.target.files?.[0];
 		if (arquivo) {
 			const leitor = new FileReader();
@@ -30,9 +30,9 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 			};
 			leitor.readAsDataURL(arquivo);
 		}
-	};
+	}
 
-	const aoSalvarImagem = async () => {
+	async function aoSalvarImagem() {
 		if (!imagemRef.current) {
 			return;
 		}
@@ -42,9 +42,9 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		link.href = canvas.toDataURL("image/png");
 		link.download = "image-with-text.png";
 		link.click();
-	};
+	}
 
-	const aoSalvarComoSVG = () => {
+	function aoSalvarComoSVG() {
 		if (!imagem || !imagemRef.current) {
 			return;
 		}
@@ -90,9 +90,9 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		link.download = "image-with-text.svg";
 		link.click();
 		URL.revokeObjectURL(url);
-	};
+	}
 
-	const aoAdicionarTexto = () => {
+	function aoAdicionarTexto() {
 		const novoTexto: Texto = {
 			texto: "",
 			posicao: { x: 0, y: 0 },
@@ -105,9 +105,9 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		};
 		setTextos([...textos, novoTexto]);
 		setIndiceTextoAtual(textos.length);
-	};
+	}
 
-	const limitarPosicao = (posicao: { x: number; y: number }) => {
+	function limitarPosicao(posicao: { x: number; y: number }) {
 		if (!imagemRef.current) return posicao;
 
 		const { clientWidth, clientHeight } = imagemRef.current;
@@ -119,7 +119,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		if (novaPosicao.y > clientHeight) novaPosicao.y = clientHeight;
 
 		return novaPosicao;
-	};
+	}
 
 	return (
 		<div
@@ -173,7 +173,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 							src={imagem}
 							alt="Uploaded"
 							className="border-2 border-black  object-cover max-h-fit"
-							onClick={(e) => {
+							onClick={() => {
 								setIndiceTextoAtual(null);
 							}}
 						/>

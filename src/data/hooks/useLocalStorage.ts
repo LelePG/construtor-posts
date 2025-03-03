@@ -9,13 +9,13 @@ export default function useLocalStorage(key: string) {
 		}
 	}
 
-	const setarValorStorage = (value: any) => {
+	function setarValorStorage(value: any) {
 		try {
 			window.localStorage.setItem(key, JSON.stringify(value));
 		} catch (error) {
 			console.error(error);
 		}
-	};
+	}
 
 	return { pegarValorStorage, setarValorStorage };
 }

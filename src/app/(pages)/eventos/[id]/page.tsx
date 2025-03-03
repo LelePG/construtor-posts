@@ -4,7 +4,7 @@ import { useEventos } from "@/data/hooks/useEventos";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 
-export default function () {
+export default function Evento() {
 	const { salvarEvento, obterEvento } = useEventos();
 	const router = useRouter();
 	const { id } = useParams();
