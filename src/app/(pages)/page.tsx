@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import FormPost from "@/components/post/FormPost";
 import EditorImagem from "@/components/imagem/EditorImagem";

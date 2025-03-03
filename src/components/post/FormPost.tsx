@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, useRef } from "react";
 import { useEventos } from "@/data/hooks/useEventos";
 import { Button, Input, Select } from "../template";
