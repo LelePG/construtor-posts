@@ -12,7 +12,7 @@ export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
 	};
 
 	return (
-		<div className="my-3 flex flex-col ">
+		<div className="max-w-72 my-3 flex flex-col ">
 			<div className="flex flex-col justify-center gap-4 ">
 				<Input
 					tipo="color"
@@ -21,7 +21,7 @@ export default function ConfigTexto({ config, setConfig }: ConfigTextoProps) {
 					texto="Cor do Texto:"
 					valor={config.cor}
 					onChange={(e) => aoMudarConfig("cor", e.target.value)}
-					className="flex gap-4 items-center min-w-52 text-white"
+					className="flex gap-4 items-center w-40 text-white"
 				/>
 				<div className="flex gap-4 items-center mx-4 px-2 pt-2 ">
 					<Checkbox

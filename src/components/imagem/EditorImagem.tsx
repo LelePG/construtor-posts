@@ -43,37 +43,6 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		link.click();
 	};
 
-	const moverTexto = (index: number) => (e: React.MouseEvent) => {
-		const xInicial = e.clientX;
-		const yInicial = e.clientY;
-		const xInicialTexto = textos[index].posicao.x;
-		const yInicialTexto = textos[index].posicao.y;
-
-		const handleMouseMove = (moveEvent: MouseEvent) => {
-			const dx = moveEvent.clientX - xInicial;
-			const dy = moveEvent.clientY - yInicial;
-
-			const novos = [...textos];
-			novos[index].posicao = {
-				x: xInicialTexto + dx,
-				y: yInicialTexto + dy,
-			};
-			setTextos(novos);
-
-			moveEvent.preventDefault();
-		};
-
-		const handleMouseUp = () => {
-			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("mouseup", handleMouseUp);
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
-
-		e.preventDefault();
-	};
-
 	const aoAdicionarTexto = () => {
 		const novoTexto: Texto = {
 			texto: "",
@@ -92,7 +61,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 	return (
 		<div
 			className={twMerge(
-				"mt-14 bg-gray-50 rounded-lg container mx-auto p-4",
+				" bg-gray-50 rounded-lg container mx-auto p-4",
 				className
 			)}
 		>
@@ -100,7 +69,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 
 			<div className="flex gap-4 my-5 p-3 ">
 				{imagem && (
-					<div className="flex flex-col w-1/3 border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
+					<div className="flex flex-col border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
 						<div className="my-2">
 							<Button
 								onClick={aoAdicionarTexto}
@@ -146,8 +115,15 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 								config={obj}
 								key={index}
 								posicao={obj.posicao}
+								setPosicao={(posicao) => {
+									const novosTextos = [...textos];
+									novosTextos[index] = {
+										...novosTextos[index],
+										posicao,
+									};
+									setTextos(novosTextos);
+								}}
 								isSelecionado={indiceTextoAtual === index}
-								onMouseDown={moverTexto(index)}
 								onClick={() => setIndiceTextoAtual(index)}
 							/>
 						))}

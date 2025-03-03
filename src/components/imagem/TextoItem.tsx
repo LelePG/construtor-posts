@@ -1,83 +1,50 @@
-import { useState, useEffect } from "react";
 import { TextoConfig } from "@/core/texto/TextoConfig";
+import { useRef } from "react";
+import { useResize } from "@/data/hooks/useResize";
+import { useMove } from "@/data/hooks/useMove";
 
 interface TextItemProps {
 	config: TextoConfig;
 	posicao: { x: number; y: number };
-	onMouseDown: (e: React.MouseEvent) => void;
-	onClick: () => void;
+	setPosicao: (posicao: { x: number; y: number }) => void;
 	isSelecionado: boolean;
+	onClick: () => void;
 }
+
+const getAlinhamento = (
+	justificacao: string
+): React.CSSProperties["textAlign"] => {
+	switch (justificacao) {
+		case "centro":
+			return "center";
+		case "direita":
+			return "right";
+		default:
+			return "left";
+	}
+};
 
 export default function TextoItem({
 	config,
 	posicao,
-	onMouseDown,
+	setPosicao,
 	onClick,
 	isSelecionado,
 }: TextItemProps) {
-	const [resizeState, setResizeState] = useState({
-		largura: 200,
-		isResizing: false,
-		startX: 0,
-		startWidth: 200,
-	});
-
-	let alinhamento: React.CSSProperties["textAlign"] = "left";
-
-	if (config.justificacao === "centro") {
-		alinhamento = "center";
-	} else if (config.justificacao === "direita") {
-		alinhamento = "right";
-	}
-
-	const handleMouseDownResize = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setResizeState((prevState) => ({
-			...prevState,
-			isResizing: true,
-			startX: e.clientX,
-			startWidth: prevState.largura,
-		}));
-	};
-
-	const handleMouseMove = (e: MouseEvent) => {
-		if (resizeState.isResizing) {
-			const newWidth =
-				resizeState.startWidth + (e.clientX - resizeState.startX);
-			setResizeState((prevState) => ({
-				...prevState,
-				largura: newWidth > 50 ? newWidth : 70,
-			}));
-		}
-	};
-
-	const handleMouseUp = () => {
-		setResizeState((prevState) => ({
-			...prevState,
-			isResizing: false,
-		}));
-	};
-
-	useEffect(() => {
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
-
-		return () => {
-			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("mouseup", handleMouseUp);
-		};
-	}, [resizeState.isResizing]);
+	const divRef = useRef<HTMLDivElement>(null);
+	const { resizeState, handleResize } = useResize(divRef);
+	const { moverTexto } = useMove(divRef, posicao, setPosicao);
 
 	return (
 		<div
+			ref={divRef}
 			className={`absolute border-2 leading-tight cursor-move select-none ${
 				isSelecionado ? "border-red-500" : "border-transparent"
 			}`}
 			style={{
 				left: `${posicao.x}px`,
 				top: `${posicao.y}px`,
-				textAlign: alinhamento,
+				textAlign: getAlinhamento(config.justificacao),
 				width: `${resizeState.largura}px`,
 				color: config.cor,
 				fontWeight: config.negrito ? "bold" : "normal",
@@ -85,13 +52,13 @@ export default function TextoItem({
 				fontFamily: config.familiaFonte,
 				fontSize: `${config.tamanhoFonte}px`,
 			}}
-			onMouseDown={onMouseDown}
+			onMouseDown={moverTexto}
 			onClick={onClick}
 		>
 			{config.texto}
 
 			<div
-				onMouseDown={handleMouseDownResize}
+				onMouseDown={handleResize}
 				className={`w-1 h-full ${
 					isSelecionado ? "bg-fuchsia-500" : "bg-transparent"
 				} cursor-ew-resize absolute right-0 top-0`}
