@@ -107,6 +107,20 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		setIndiceTextoAtual(textos.length);
 	};
 
+	const limitarPosicao = (posicao: { x: number; y: number }) => {
+		if (!imagemRef.current) return posicao;
+
+		const { clientWidth, clientHeight } = imagemRef.current;
+		const novaPosicao = { ...posicao };
+
+		if (novaPosicao.x < 0) novaPosicao.x = 0;
+		if (novaPosicao.y < 0) novaPosicao.y = 0;
+		if (novaPosicao.x > clientWidth) novaPosicao.x = clientWidth;
+		if (novaPosicao.y > clientHeight) novaPosicao.y = clientHeight;
+
+		return novaPosicao;
+	};
+
 	return (
 		<div
 			className={twMerge(
@@ -143,7 +157,9 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 									const novosTextos = [...textos];
 									novosTextos[indiceTextoAtual] = {
 										...config,
-										posicao: novosTextos[indiceTextoAtual].posicao,
+										posicao: limitarPosicao(
+											novosTextos[indiceTextoAtual].posicao
+										),
 									};
 									setTextos(novosTextos);
 								}}
@@ -168,12 +184,13 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 							<TextoItem
 								config={obj}
 								key={index}
-								posicao={obj.posicao}
+								posicao={limitarPosicao(obj.posicao)}
 								setPosicao={(posicao) => {
+									const novaPosicao = limitarPosicao(posicao);
 									const novosTextos = [...textos];
 									novosTextos[index] = {
 										...novosTextos[index],
-										posicao,
+										posicao: novaPosicao,
 									};
 									setTextos(novosTextos);
 								}}
