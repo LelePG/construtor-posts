@@ -39,3 +39,9 @@ body {
 	font-weight: bold;
 	font-style: italic;
 }
+
+@layer base {
+	img {
+		@apply inline-block;
+	}
+}

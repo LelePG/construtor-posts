@@ -36,7 +36,8 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		if (!imagemRef.current) {
 			return;
 		}
-		const canvas = await html2canvas(imagemRef.current);
+
+		const canvas = await html2canvas(imagemRef.current, { scale: 1 });
 		const link = document.createElement("a");
 		link.href = canvas.toDataURL("image/png");
 		link.download = "image-with-text.png";
@@ -67,19 +68,19 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 		>
 			<UploadImagem onImageUpload={aoSubirImagem} />
 
-			<div className="flex gap-4 my-5 p-3 ">
+			<div className="flex gap-4 p-3 ">
 				{imagem && (
-					<div className="flex flex-col border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
-						<div className="my-2">
+					<div className="w-1/3 flex flex-col border border-blue-800 rounded-lg text-gray-50 bg-blue-500 p-4">
+						<div className="my-0 flex flex-col gap-2">
 							<Button
 								onClick={aoAdicionarTexto}
 								texto="Adicionar Texto"
-								className="w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+								className=" border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
 							/>
 							<Button
 								onClick={aoSalvarImagem}
 								texto="Salvar Imagem"
-								className="mt-4 w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
+								className="w-full border-2 font-semibold border-gray-200 text-gray-200 hover:bg-gray-200 hover:text-blue-500 bg-blue-500"
 							/>
 						</div>
 						{indiceTextoAtual !== null && textos.length > 0 && (
@@ -97,7 +98,7 @@ export default function EditorImagem({ className }: EditorImagemProps) {
 						)}
 					</div>
 				)}
-				<div ref={imagemRef} className="relative max-w-screen-lg">
+				<div ref={imagemRef} className="relative w-2/3">
 					{imagem && (
 						<img
 							src={imagem}
