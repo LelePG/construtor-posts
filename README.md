@@ -1,4 +1,6 @@
-## Gerador de Posts
+## Contrutor de Posts
+
+> Documentação ainda em construção
 
 ## O que é este projeto?
 
