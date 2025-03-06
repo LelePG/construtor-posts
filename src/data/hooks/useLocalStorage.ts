@@ -1,5 +1,7 @@
+import { useCallback } from "react";
+
 export default function useLocalStorage(key: string) {
-	function pegarValorStorage() {
+	const pegarValorStorage = useCallback(() => {
 		try {
 			const item = window.localStorage.getItem(key);
 			return item ? JSON.parse(item) : [];
@@ -7,15 +9,18 @@ export default function useLocalStorage(key: string) {
 			console.error(error);
 			return [];
 		}
-	}
+	}, [key]);
 
-	function setarValorStorage(value: any) {
-		try {
-			window.localStorage.setItem(key, JSON.stringify(value));
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	const setarValorStorage = useCallback(
+		(value: any) => {
+			try {
+				window.localStorage.setItem(key, JSON.stringify(value));
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[key]
+	);
 
 	return { pegarValorStorage, setarValorStorage };
 }
