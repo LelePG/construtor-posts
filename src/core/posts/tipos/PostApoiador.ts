@@ -8,9 +8,7 @@ export default class PostApoiador extends PostBase {
 	gerar({ apoiador }: { apoiador: string }): string {
 		return this.factory
 			.comTexto(
-				`🤝 O ${apoiador.trim()} é um patrocinador oficial do ${
-					this.evento.nome
-				}!`
+				`🤝 O ${apoiador.trim()} é um apoiador oficial do ${this.evento.nome}!`
 			)
 			.comTexto(
 				`Agradecemos demais por possibilitar que o ${this.evento.nome} seja possível!`

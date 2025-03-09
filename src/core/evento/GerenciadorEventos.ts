@@ -6,6 +6,7 @@ export default class GerenciadorEventos {
 
 	carregar(propriedades: PropriedadesEvento[]): void {
 		if (!propriedades) return;
+
 		propriedades.forEach((propriedades) => {
 			this.criar({
 				...propriedades,

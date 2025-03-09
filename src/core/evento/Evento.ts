@@ -6,7 +6,7 @@ export default class Evento {
 	constructor(propriedades: PropriedadesEvento) {
 		this._propriedades = {
 			...propriedades,
-			nome: propriedades.nome.toLowerCase().trim(),
+			nome: propriedades.nome.trim(),
 		};
 	}
 
@@ -19,7 +19,7 @@ export default class Evento {
 	}
 
 	get nome(): string {
-		return this._propriedades.nome.toLowerCase().trim();
+		return this._propriedades.nome;
 	}
 
 	get linkInscricao(): string {
